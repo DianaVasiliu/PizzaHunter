@@ -6,4 +6,9 @@
     <string name="info_button_3">Comanda minima</string>
     <string name="info_button_4">Termeni si conditii</string>
     <string name="info_button_5">Alergeni si valori nutritionale</string>
+    <string name="info_title">Informatii</string>
+    <string name="profile_title">Contul meu</string>
+    <string name="logged_out_warning">Pentru a continua, te rugam sa te autentifici sau sa iti creezi un cont nou.</string>
+    <string name="login_button">Intra in cont</string>
+    <string name="signup_button">Creeaza cont nou</string>
 </resources>

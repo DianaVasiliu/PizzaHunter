@@ -11,27 +11,27 @@
         <include
             android:id="@+id/location_button"
             layout="@layout/info_button"
-            app:buttonText="@{@string/info_button_1}"
+            app:infoButtonText="@{@string/info_button_1}"
             />
         <include
             android:id="@+id/schedule_button"
             layout="@layout/info_button"
-            app:buttonText="@{@string/info_button_2}"
+            app:infoButtonText="@{@string/info_button_2}"
             />
         <include
             android:id="@+id/minorder_button"
             layout="@layout/info_button"
-            app:buttonText="@{@string/info_button_3}"
+            app:infoButtonText="@{@string/info_button_3}"
             />
         <include
             android:id="@+id/terms_button"
             layout="@layout/info_button"
-            app:buttonText="@{@string/info_button_4}"
+            app:infoButtonText="@{@string/info_button_4}"
             />
         <include
             android:id="@+id/allergens_button"
             layout="@layout/info_button"
-            app:buttonText="@{@string/info_button_5}"
+            app:infoButtonText="@{@string/info_button_5}"
             />
 
     </LinearLayout>
