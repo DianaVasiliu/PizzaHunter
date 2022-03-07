@@ -13,13 +13,24 @@ class MainActivity : AppCompatActivity() {
     private val menuFragment = MenuFragment()
     private val infoFragment = InfoFragment()
     private val profileLoggedOutFragment = ProfileLoggedOutFragment()
+    private var currentFragmentIndex: Int = 0
+    private var currentFragment: Fragment = homeFragment
+
+    companion object {
+        private const val CURRENT_FRAGMENT_INDEX = "CURRENT_FRAGMENT_INDEX"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        replaceFragment(homeFragment)
+        if (savedInstanceState != null) {
+            currentFragmentIndex = savedInstanceState.getInt(CURRENT_FRAGMENT_INDEX)
+        }
+
+        currentFragment = indexToFragment(currentFragmentIndex)
+        replaceFragment(currentFragment)
 
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
@@ -35,10 +46,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt(CURRENT_FRAGMENT_INDEX, currentFragmentIndex)
+    }
+
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container_view, fragment)
             commit()
+        }
+        currentFragmentIndex = fragmentToIndex(fragment)
+    }
+
+    private fun fragmentToIndex(fragment: Fragment) : Int {
+        return when(fragment) {
+            homeFragment -> 0
+            menuFragment -> 1
+            infoFragment -> 2
+            profileLoggedOutFragment -> 3
+            else -> 0
+        }
+    }
+
+    private fun indexToFragment(idx: Int) : Fragment {
+        return when(idx) {
+            0 -> homeFragment
+            1 -> menuFragment
+            2 -> infoFragment
+            3 -> profileLoggedOutFragment
+            else -> homeFragment
         }
     }
 }

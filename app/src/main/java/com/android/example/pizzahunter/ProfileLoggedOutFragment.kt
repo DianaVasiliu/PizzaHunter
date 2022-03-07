@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.android.example.pizzahunter.databinding.FragmentInfoBinding
 import com.android.example.pizzahunter.databinding.FragmentProfileLoggedOutBinding
 
 class ProfileLoggedOutFragment : Fragment() {

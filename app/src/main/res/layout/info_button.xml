@@ -17,7 +17,7 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="2dp"
         android:background="@color/white"
         android:backgroundTint="@color/white"
         android:fontFamily="sans-serif"
