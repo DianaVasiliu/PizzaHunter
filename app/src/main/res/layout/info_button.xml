@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:orientation="vertical" >
+
+    <data>
+        <variable
+            name="buttonText"
+            type="String" />
+        <variable
+            name="buttonIcon"
+            type="int" />
+    </data>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:fontFamily="sans-serif"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="0dp"
+        android:text="@{buttonText}"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_grey"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/white"
+        app:icon="@{buttonIcon == 0 ? @drawable/location :buttonIcon == 1 ? @drawable/restaurant :buttonIcon == 2 ? @drawable/checkout :buttonIcon == 3 ? @drawable/order :@drawable/allergen}"
+        app:iconSize="30dp"
+        app:iconTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp"
+        tools:text="@string/info_button_2"
+        tools:icon="@drawable/restaurant"/>
+</layout>
