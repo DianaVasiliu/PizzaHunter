@@ -28,4 +28,6 @@
     <string name="logged_out_warning">Pentru a continua, te rugam sa te autentifici sau sa iti creezi un cont nou.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="video_thumbnail">Video thumbnail</string>
+    <string name="video_play_button">Video play button</string>
 </resources>

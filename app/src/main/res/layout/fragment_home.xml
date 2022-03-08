@@ -7,14 +7,27 @@
         android:layout_height="match_parent"
         tools:context=".HomeFragment">
 
-        <TextView
-            android:id="@+id/textView2"
+        <VideoView
+            android:id="@+id/videoView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ACASA"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@mipmap/thumbnail" />
+
+        <ImageView
+            android:id="@+id/play_button"
+            android:layout_width="85dp"
+            android:layout_height="91dp"
+            android:src="@drawable/ic_baseline_play_circle_outline_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/videoView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/video_play_button" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
