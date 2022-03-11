@@ -46,6 +46,15 @@
     <string name="terms_and_conditions_checkbox">Sunt de acord cu Termenii si conditiile</string>
     <string name="star">*</string>
 
+    <!--form validation-->
+    <string name="error_provide_all">Te rugam sa introduci toate datele</string>
+    <string name="error_short_password">Parola trebuie sa contina cel putin 6 caractere</string>
+    <string name="error_passwords_dont_match">Parolele trebuie sa coincida</string>
+    <string name="error_invalid_email">E-mail invalid</string>
+    <string name="error_invalid_phone_number">Numar de telefon invalid</string>
+    <string name="error_checkbox">Termenii si conditiile trebuie acceptate</string>
+
     <!--other-->
+    <string name="something_went_wrong">Ceva nu a mers bine. Te rugam incearca din nou.</string>
 
 </resources>

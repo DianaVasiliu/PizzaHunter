@@ -38,8 +38,9 @@
                     android:hint="@string/last_name"
                     android:inputType="textPersonName"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.47" />
+                    app:layout_constraintTop_toBottomOf="@+id/error_text"
+                    app:layout_constraintWidth_percent="0.47"
+                    android:importantForAutofill="no" />
 
                 <EditText
                     android:id="@+id/first_name_textinput"
@@ -49,7 +50,8 @@
                     android:inputType="textPersonName"
                     app:layout_constraintBaseline_toBaselineOf="@+id/last_name_textinput"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintWidth_percent="0.47" />
+                    app:layout_constraintWidth_percent="0.47"
+                    android:importantForAutofill="no" />
 
                 <EditText
                     android:id="@+id/email_textinput"
@@ -70,9 +72,11 @@
                     android:layout_width="match_parent"
                     android:hint="@string/phone_number_textinput"
                     android:inputType="phone"
+                    android:maxLength="15"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/email_textinput" />
+                    app:layout_constraintTop_toBottomOf="@+id/email_textinput"
+                    android:importantForAutofill="no" />
 
                 <EditText
                     android:id="@+id/password_textinput"
@@ -132,6 +136,18 @@
                     android:textColor="@color/primary"
                     app:layout_constraintBaseline_toBaselineOf="@+id/terms_and_conditions_checkbox"
                     app:layout_constraintStart_toEndOf="@+id/terms_and_conditions_checkbox" />
+
+                <TextView
+                    android:id="@+id/error_text"
+                    android:layout_width="match_parent"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/error"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
