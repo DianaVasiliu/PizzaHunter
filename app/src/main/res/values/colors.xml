@@ -9,5 +9,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="error">#CC0300</color>
+    <color name="transparent_grey">#AA4F5D75</color>
     <color name="ic_launcher_background">#000000</color>
 </resources>

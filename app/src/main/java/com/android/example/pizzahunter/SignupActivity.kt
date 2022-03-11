@@ -1,6 +1,7 @@
 package com.android.example.pizzahunter
 
 import android.content.Context
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -35,6 +36,8 @@ class SignupActivity : AppCompatActivity(), CoroutineScope {
         }
 
         binding.signupButton.button.setOnClickListener {
+            binding.loadingScreen.visibility = View.VISIBLE
+
             val formIsOk = validateForm(binding)
 
             if (formIsOk) {
@@ -56,15 +59,18 @@ class SignupActivity : AppCompatActivity(), CoroutineScope {
                             "phoneNumber" to phoneNumber
                         )
                         Database.addUser(user.uid, dbUser)
+                        binding.loadingScreen.visibility = View.GONE
                         finish()
                     }
                     else {
+                        binding.loadingScreen.visibility = View.GONE
                         showError(binding.errorText, R.string.something_went_wrong)
                         binding.signupScrollView.fullScroll(View.FOCUS_UP)
                     }
                 }
             }
             else {
+                binding.loadingScreen.visibility = View.GONE
                 binding.signupScrollView.fullScroll(View.FOCUS_UP)
             }
         }

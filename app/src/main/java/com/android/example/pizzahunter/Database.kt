@@ -54,7 +54,7 @@ class Database {
 
             try {
                 val db = firestore()
-                val result = db.collection("users").document(id).set(data).await()
+                db.collection("users").document(id).set(data).await()
                 Log.d(FIREBASE_TAG, "Successfully added $id")
             }
             catch (e: Exception) {
