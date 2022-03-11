@@ -13,6 +13,8 @@
     <string name="menu_title">Meniu</string>
     <string name="info_title">Informatii</string>
     <string name="profile_title">Contul meu</string>
+    <string name="login_title">Intra in cont</string>
+    <string name="signup_title">Creeaza cont nou</string>
 
     <!--buttons-->
     <string name="login_button">Intra in cont</string>
@@ -24,16 +26,26 @@
     <string name="info_nav_button">Info</string>
     <string name="profile_nav_button">Contul meu</string>
 
-    <!--other-->
-    <string name="logged_out_warning">Pentru a continua, te rugam sa te autentifici sau sa iti creezi un cont nou.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="video_thumbnail">Video thumbnail</string>
-    <string name="video_play_button">Video play button</string>
-    <string name="login_title">Intra in cont</string>
+    <!--hints-->
     <string name="email_textinput">Adresa de e-mail</string>
     <string name="password_textinput">Parola</string>
+    <string name="confirm_password_textinput">Confirma parola</string>
+    <string name="first_name">Prenume</string>
+    <string name="last_name">Nume</string>
+    <string name="phone_number_textinput">Numar de telefon</string>
+
+    <!--content descriptions-->
+    <string name="video_thumbnail">Video thumbnail</string>
+    <string name="video_play_button">Video play button</string>
     <string name="facebook_login_button">Facebook Login Button</string>
     <string name="google_login_button">Google Login Button</string>
+
+    <!--app text-->
+    <string name="logged_out_warning">Pentru a continua, te rugam sa te autentifici sau sa iti creezi un cont nou.</string>
     <string name="or_login_with">sau logheaza-te cu</string>
+    <string name="terms_and_conditions_checkbox">Sunt de acord cu Termenii si conditiile</string>
+    <string name="star">*</string>
+
+    <!--other-->
+
 </resources>

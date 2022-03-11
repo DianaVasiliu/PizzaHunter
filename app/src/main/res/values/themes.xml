@@ -22,4 +22,11 @@
         <item name="android:paddingLeft">@dimen/text_input_padding</item>
         <item name="android:textColorHint">@color/light_grey</item>
     </style>
+    <style name="Theme.Text" parent="android:Theme">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
 </resources>

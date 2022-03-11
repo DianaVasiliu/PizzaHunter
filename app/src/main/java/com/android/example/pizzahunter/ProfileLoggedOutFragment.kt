@@ -22,6 +22,10 @@ class ProfileLoggedOutFragment : Fragment() {
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
         }
+        binding.signupButton.button.setOnClickListener {
+            val intent = Intent(activity, SignupActivity::class.java)
+            startActivity(intent)
+        }
 
         return binding.root
     }
