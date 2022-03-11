@@ -1,5 +1,6 @@
 package com.android.example.pizzahunter
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,11 @@ class ProfileLoggedOutFragment : Fragment() {
     ): View? {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.profile_title)
         val binding = DataBindingUtil.inflate<FragmentProfileLoggedOutBinding>(inflater, R.layout.fragment_profile_logged_out, container, false)
+
+        binding.loginButton.button.setOnClickListener {
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
         return binding.root
     }
