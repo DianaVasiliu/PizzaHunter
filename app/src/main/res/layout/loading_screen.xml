@@ -7,10 +7,18 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@color/transparent_grey">
-    <ProgressBar
-        style="?android:attr/progressBarStyle"
-        android:indeterminateOnly="true"
-        android:indeterminateDrawable="@drawable/rotating_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/rounded_corners_white_rectangle"
+        android:gravity="center">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/rotating_logo"
+            android:indeterminateOnly="true" />
+    </LinearLayout>
 </RelativeLayout>

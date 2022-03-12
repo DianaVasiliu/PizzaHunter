@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
     <style name="Theme.TextInput" parent="android:Theme">
-        <item name="android:background">@drawable/text_input</item>
+        <item name="android:background">@drawable/rounded_corners_white_rectangle</item>
         <item name="android:layout_height">@dimen/text_input_height</item>
         <item name="android:layout_marginTop">@dimen/text_input_margin_vertical</item>
         <item name="android:layout_marginBottom">@dimen/text_input_margin_vertical</item>

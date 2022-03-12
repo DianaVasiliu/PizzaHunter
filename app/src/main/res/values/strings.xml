@@ -45,6 +45,7 @@
     <string name="or_login_with">sau logheaza-te cu</string>
     <string name="terms_and_conditions_checkbox">Sunt de acord cu Termenii si conditiile</string>
     <string name="star">*</string>
+    <string name="greeting">Salut</string>
 
     <!--form validation-->
     <string name="error_provide_all">Te rugam sa introduci toate datele</string>
@@ -53,6 +54,7 @@
     <string name="error_invalid_email">E-mail invalid</string>
     <string name="error_invalid_phone_number">Numar de telefon invalid</string>
     <string name="error_checkbox">Termenii si conditiile trebuie acceptate</string>
+    <string name="error_invalid_credentials">E-mail sau parola gresita</string>
 
     <!--other-->
     <string name="something_went_wrong">Ceva nu a mers bine. Te rugam incearca din nou.</string>

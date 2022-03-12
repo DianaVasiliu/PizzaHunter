@@ -15,7 +15,14 @@ class Database {
 
     companion object {
         private const val CREATE_ACCOUNT_TAG = "CREATE_ACCOUNT"
+        private const val LOGIN_TAG = "LOGIN"
         private const val FIREBASE_TAG = "FIREBASE"
+
+        private var error: String = ""
+
+        fun getError(): String {
+            return error
+        }
 
         private fun firestore() : FirebaseFirestore {
             return Firebase.firestore
@@ -29,6 +36,35 @@ class Database {
             auth().currentUser?.reload()
         }
 
+        fun isUserLoggedIn(): Boolean {
+            return auth().currentUser != null
+        }
+
+        suspend fun getUser(): MutableMap<String, Any>? {
+            val db = firestore()
+            val id = auth().currentUser?.uid
+            return if (id != "" && id != null) {
+                val result = db.collection("users").document(id).get().await()
+                result.data
+            } else {
+                null
+            }
+        }
+
+        suspend fun signInWithEmailAndPassword(email: String, password: String): FirebaseUser? {
+            return withContext(Dispatchers.IO) {
+                try {
+                    val result = auth().signInWithEmailAndPassword(email, password).await()
+                    result.user
+                }
+                catch (e: Exception) {
+                    Log.d(LOGIN_TAG, e.toString())
+                    error = Constants.ERRORS.INVALID_CREDENTIALS
+                    null
+                }
+            }
+        }
+
         suspend fun createUserWithEmailAndPassword(email: String, password: String): FirebaseUser? {
             return withContext(Dispatchers.IO) {
                 try {
@@ -37,6 +73,7 @@ class Database {
                 }
                 catch (e: Exception) {
                     Log.d(CREATE_ACCOUNT_TAG, e.toString())
+                    error = e.message.toString()
                     null
                 }
             }

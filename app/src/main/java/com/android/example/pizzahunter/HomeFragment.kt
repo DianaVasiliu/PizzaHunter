@@ -8,16 +8,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.android.example.pizzahunter.databinding.FragmentHomeBinding
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.home_title)
         val binding = DataBindingUtil.inflate<FragmentHomeBinding>(inflater, R.layout.fragment_home, container, false)
+
+        lifecycleScope.launch {
+            if (Database.isUserLoggedIn()) {
+                val user = Database.getUser()
+                val greeting = getString(R.string.greeting) + ", ${user?.get("firstName")}!"
+                binding.greetingText.text = greeting
+            }
+            else {
+                val greeting = getString(R.string.greeting) + "!"
+                binding.greetingText.text = greeting
+            }
+        }
 
         binding.videoView.apply {
             setVideoPath(
