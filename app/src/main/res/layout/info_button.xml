@@ -31,7 +31,7 @@
         android:textSize="15sp"
         android:textStyle="bold"
         app:backgroundTint="@color/white"
-        app:icon="@{buttonIcon == 0 ? @drawable/location :buttonIcon == 1 ? @drawable/restaurant :buttonIcon == 2 ? @drawable/checkout :buttonIcon == 3 ? @drawable/order :@drawable/allergen}"
+        app:icon="@{buttonIcon == 0 ? @drawable/location :buttonIcon == 1 ?@drawable/restaurant :buttonIcon == 2 ? @drawable/checkout :buttonIcon == 3 ? @drawable/order : buttonIcon == 4 ? @drawable/allergen : buttonIcon == 5 ? @drawable/edit_pencil : buttonIcon == 6 ? @drawable/heart : buttonIcon == 7 ? @drawable/order_history : @drawable/logout }"
         app:iconSize="30dp"
         app:iconTint="@null"
         app:layout_constraintEnd_toEndOf="parent"

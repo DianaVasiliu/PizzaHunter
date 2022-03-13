@@ -12,12 +12,15 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment = HomeFragment()
     private val menuFragment = MenuFragment()
     private val infoFragment = InfoFragment()
+    private val profileLoggedInFragment = ProfileLoggedInFragment()
     private val profileLoggedOutFragment = ProfileLoggedOutFragment()
+    private lateinit var profileFragment: Fragment
     private var currentFragmentIndex: Int = 0
     private var currentFragment: Fragment = homeFragment
 
     companion object {
         private const val CURRENT_FRAGMENT_INDEX = "CURRENT_FRAGMENT_INDEX"
+        private const val CURRENT_PROFILE_FRAGMENT_INDEX = "CURRENT_PROFILE_FRAGMENT_INDEX"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +30,10 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState != null) {
             currentFragmentIndex = savedInstanceState.getInt(CURRENT_FRAGMENT_INDEX)
+            profileFragment = when(savedInstanceState.getInt(CURRENT_PROFILE_FRAGMENT_INDEX)) {
+                1 -> profileLoggedOutFragment
+                else -> profileLoggedInFragment
+            }
         }
 
         currentFragment = indexToFragment(currentFragmentIndex)
@@ -40,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.home_nav_button -> replaceFragment(homeFragment)
                 R.id.menu_nav_button -> replaceFragment(menuFragment)
                 R.id.info_nav_button -> replaceFragment(infoFragment)
-                R.id.profile_nav_button -> replaceFragment(profileLoggedOutFragment)
+                R.id.profile_nav_button -> replaceFragment(profileFragment)
             }
             true
         }
@@ -49,12 +56,23 @@ class MainActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         Database.checkUserLoggedIn()
+        profileFragment = if (Database.isUserLoggedIn()) {
+            profileLoggedInFragment
+        } else {
+            profileLoggedOutFragment
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
+        val profileIndex = when(profileFragment) {
+            profileLoggedOutFragment -> 1
+            else -> 2
+        }
+
         outState.putInt(CURRENT_FRAGMENT_INDEX, currentFragmentIndex)
+        outState.putInt(CURRENT_PROFILE_FRAGMENT_INDEX, profileIndex)
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -70,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             homeFragment -> 0
             menuFragment -> 1
             infoFragment -> 2
-            profileLoggedOutFragment -> 3
+            profileFragment -> 3
             else -> 0
         }
     }
@@ -80,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             0 -> homeFragment
             1 -> menuFragment
             2 -> infoFragment
-            3 -> profileLoggedOutFragment
+            3 -> profileFragment
             else -> homeFragment
         }
     }

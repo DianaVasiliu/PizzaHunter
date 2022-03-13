@@ -79,6 +79,10 @@ class Database {
             }
         }
 
+        fun signOut() {
+            auth().signOut()
+        }
+
         suspend fun addUser(id: String, data: HashMap<String, String>) {
             val dataOk = data.containsKey("firstName")
                     && data.containsKey("lastName")

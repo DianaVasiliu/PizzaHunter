@@ -56,7 +56,14 @@
     <string name="error_checkbox">Termenii si conditiile trebuie acceptate</string>
     <string name="error_invalid_credentials">E-mail sau parola gresita</string>
 
+    <!--profile buttons-->
+    <string name="profile_button_1">Editeaza profilul</string>
+    <string name="profile_button_2">Favorite</string>
+    <string name="profile_button_3">Comenzile mele</string>
+    <string name="profile_button_4">Delogare</string>
+
     <!--other-->
     <string name="something_went_wrong">Ceva nu a mers bine. Te rugam incearca din nou.</string>
+    <string name="profile_image">Profile Image</string>
 
 </resources>
