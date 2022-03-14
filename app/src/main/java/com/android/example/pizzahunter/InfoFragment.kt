@@ -29,7 +29,7 @@ class InfoFragment : Fragment() {
         )
 
         for ((index, button) in infoButtons.withIndex()) {
-            button.buttonIcon = index
+            button.buttonIndex = index
             // add click event
         }
 

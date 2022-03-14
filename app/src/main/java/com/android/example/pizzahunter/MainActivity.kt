@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
         currentFragment = indexToFragment(currentFragmentIndex)
         replaceFragment(currentFragment)
 
+        setOnAuthStateChangeListener()
+
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
         val bottomNavigationView = binding.bottomNavigation
@@ -56,10 +58,15 @@ class MainActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         Database.checkUserLoggedIn()
+
         profileFragment = if (Database.isUserLoggedIn()) {
             profileLoggedInFragment
         } else {
             profileLoggedOutFragment
+        }
+
+        if (currentFragmentIndex == 3) {
+            replaceFragment(profileFragment)
         }
     }
 
@@ -73,6 +80,19 @@ class MainActivity : AppCompatActivity() {
 
         outState.putInt(CURRENT_FRAGMENT_INDEX, currentFragmentIndex)
         outState.putInt(CURRENT_PROFILE_FRAGMENT_INDEX, profileIndex)
+    }
+
+    private fun setOnAuthStateChangeListener() {
+        Database.onAuthStateChange {
+            if (Database.isUserLoggedIn()) {
+                profileFragment = profileLoggedInFragment
+            } else {
+                profileFragment = profileLoggedOutFragment
+                if (currentFragmentIndex == 3) {
+                    replaceFragment(profileLoggedOutFragment)
+                }
+            }
+        }
     }
 
     private fun replaceFragment(fragment: Fragment) {

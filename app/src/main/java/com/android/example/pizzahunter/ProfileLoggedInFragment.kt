@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.android.example.pizzahunter.databinding.FragmentProfileLoggedInBinding
-import com.android.example.pizzahunter.databinding.InfoButtonBinding
 import kotlinx.coroutines.launch
 
 class ProfileLoggedInFragment : Fragment() {
@@ -32,18 +31,9 @@ class ProfileLoggedInFragment : Fragment() {
             }
         }
 
-        val infoButtons : MutableList<InfoButtonBinding> = mutableListOf(
-            binding.editProfileButton,
-            binding.favouritesButton,
-            binding.myordersButton,
-            binding.logoutButton
-        )
-
-        for ((index, button) in infoButtons.withIndex()) {
-            button.buttonIcon = 5 + index
-            // add click event
+        binding.logoutButton.setOnClickListener {
+            Database.signOut()
         }
-
 
         return binding.root
     }

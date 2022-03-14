@@ -10,28 +10,15 @@
             name="infoButtonText"
             type="String" />
         <variable
-            name="buttonIcon"
+            name="buttonIndex"
             type="int" />
     </data>
 
     <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
-        android:fontFamily="sans-serif"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:text="@{infoButtonText}"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:textColor="@color/dark_grey"
-        android:textSize="15sp"
-        android:textStyle="bold"
+        style="@style/Theme.InfoButton"
         app:backgroundTint="@color/white"
-        app:icon="@{buttonIcon == 0 ? @drawable/location :buttonIcon == 1 ?@drawable/restaurant :buttonIcon == 2 ? @drawable/checkout :buttonIcon == 3 ? @drawable/order : buttonIcon == 4 ? @drawable/allergen : buttonIcon == 5 ? @drawable/edit_pencil : buttonIcon == 6 ? @drawable/heart : buttonIcon == 7 ? @drawable/order_history : @drawable/logout }"
+        app:icon="@{buttonIndex == 0 ? @drawable/location :buttonIndex == 1 ?@drawable/restaurant :buttonIndex == 2 ? @drawable/checkout :buttonIndex == 3 ? @drawable/order : buttonIndex == 4 ? @drawable/allergen : buttonIndex == 5 ? @drawable/edit_pencil : buttonIndex == 6 ? @drawable/heart : buttonIndex == 7 ? @drawable/order_history : @drawable/logout }"
         app:iconSize="30dp"
         app:iconTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,5 +26,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:strokeWidth="0dp"
         tools:icon="@drawable/restaurant"
-        tools:text="@string/info_button_2" />
+        tools:text="@string/info_button_2"/>
 </layout>

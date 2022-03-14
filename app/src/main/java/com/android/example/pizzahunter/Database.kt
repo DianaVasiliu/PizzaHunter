@@ -32,6 +32,12 @@ class Database {
             return Firebase.auth
         }
 
+        fun onAuthStateChange(callback: () -> Unit) {
+            auth().addAuthStateListener {
+                callback()
+            }
+        }
+
         fun checkUserLoggedIn() {
             auth().currentUser?.reload()
         }

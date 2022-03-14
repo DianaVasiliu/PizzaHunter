@@ -43,29 +43,61 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_image">
 
-            <include
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit_profile_button"
-                layout="@layout/info_button"
-                app:infoButtonText="@{@string/profile_button_1}" />
+                android:text="@string/profile_button_1"
+                style="@style/Theme.InfoButton"
+                app:backgroundTint="@color/white"
+                app:icon="@drawable/edit_pencil"
+                app:iconSize="30dp"
+                app:iconTint="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0dp"/>
 
-            <include
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/favourites_button"
-                layout="@layout/info_button"
-                app:infoButtonText="@{@string/profile_button_2}" />
+                android:text="@string/profile_button_2"
+                style="@style/Theme.InfoButton"
+                app:backgroundTint="@color/white"
+                app:icon="@drawable/heart"
+                app:iconSize="30dp"
+                app:iconTint="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0dp"/>
 
-            <include
-                android:id="@+id/myorders_button"
-                layout="@layout/info_button"
-                app:infoButtonText="@{@string/profile_button_3}" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/order_history_button"
+                android:text="@string/profile_button_3"
+                style="@style/Theme.InfoButton"
+                app:backgroundTint="@color/white"
+                app:icon="@drawable/order_history"
+                app:iconSize="30dp"
+                app:iconTint="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0dp"/>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />
 
-            <include
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/logout_button"
-                layout="@layout/info_button"
-                app:infoButtonText="@{@string/profile_button_4}" />
+                android:text="@string/profile_button_4"
+                style="@style/Theme.InfoButton"
+                app:backgroundTint="@color/white"
+                app:icon="@drawable/logout"
+                app:iconSize="30dp"
+                app:iconTint="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0dp"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
