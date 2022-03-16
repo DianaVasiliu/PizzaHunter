@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.android.example.pizzahunter.databinding.FragmentProfileLoggedInBinding
+import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import kotlinx.coroutines.launch
@@ -45,6 +46,7 @@ class ProfileLoggedInFragment : Fragment() {
         binding.logoutButton.setOnClickListener {
             Database.signOut()
             googleSignInClient.revokeAccess()
+            LoginManager.getInstance().logOut()
         }
 
         return binding.root

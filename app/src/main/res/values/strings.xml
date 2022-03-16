@@ -67,9 +67,8 @@
     <string name="profile_image">Profile Image</string>
 
     <!--Facebook login-->
-<!--    <string name="facebook_app_id">641036353668223</string>-->
-<!--    <string name="fb_login_protocol_scheme">fb1234</string>-->
-<!--    <string name="facebook_client_token">bfc2ac74a20e8637ac61ed52b709a6ea</string>-->
-
+    <string name="facebook_app_id">641036353668223</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">bfc2ac74a20e8637ac61ed52b709a6ea</string>
 
 </resources>

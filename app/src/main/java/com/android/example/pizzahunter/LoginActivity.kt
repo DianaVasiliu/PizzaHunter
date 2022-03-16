@@ -11,6 +11,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import com.android.example.pizzahunter.databinding.ActivityLoginBinding
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -25,7 +30,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 
-//    private lateinit var callbackManager: CallbackManager
+    private lateinit var callbackManager: CallbackManager
 
     private lateinit var binding: ActivityLoginBinding
     private companion object {
@@ -39,22 +44,30 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
         this.supportActionBar?.title = getString(R.string.login_title)
         this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-//        callbackManager = CallbackManager.Factory.create()
+        callbackManager = CallbackManager.Factory.create()
 
-//        LoginManager.getInstance().registerCallback(callbackManager, object: FacebookCallback<LoginResult> {
-//            override fun onCancel() {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun onError(error: FacebookException) {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun onSuccess(result: LoginResult) {
-//                Log.d("FACEBOOK_LOGIN", "onSuccess: ${result.accessToken}")
-//            }
-//
-//        })
+        LoginManager.getInstance().registerCallback(callbackManager, object: FacebookCallback<LoginResult> {
+            override fun onCancel() {
+                Log.d("FACEBOOK_LOGIN", "onCancel")
+            }
+
+            override fun onError(error: FacebookException) {
+                Log.d("FACEBOOK_LOGIN", "onError: ${error.message}")
+            }
+
+            override fun onSuccess(result: LoginResult) {
+                launch {
+                    binding.loadingScreen.visibility = View.VISIBLE
+                    Database.facebookLogin(result.accessToken)
+                    if (Database.getError() == "") {
+                        finish()
+                    }
+                    else {
+                        binding.loadingScreen.visibility = View.GONE
+                    }
+                }
+            }
+        })
 
         val gso: GoogleSignInOptions =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -67,9 +80,9 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
 
         binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
 
-//        binding.facebookButton.setOnClickListener {
-//            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"))
-//        }
+        binding.facebookButton.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("email", "public_profile"))
+        }
 
         binding.googleButton.setOnClickListener {
             val intent = googleSignInClient.signInIntent
@@ -111,7 +124,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        callbackManager.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQ_CODE_SIGN_IN) {

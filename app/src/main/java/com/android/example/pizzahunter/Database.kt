@@ -1,7 +1,9 @@
 package com.android.example.pizzahunter
 
 import android.util.Log
+import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -88,47 +90,54 @@ class Database {
         }
 
         suspend fun googleLogin(account: GoogleSignInAccount?) {
-            Log.d("GOOGLE_LOGIN", "googleLogin: begin firebase google login")
+            val TAG = "GOOGLE_LOGIN"
 
             try {
                 val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
                 val authResult = auth().signInWithCredential(credential).await()
-                Log.d("GOOGLE_LOGIN", "googleLogin: success")
+                Log.d(TAG, "googleLogin: success")
+
+                val userData = getUserData()
 
                 val firebaseUser = auth().currentUser
-                val email = firebaseUser!!.email
-                val profilePicUri = firebaseUser.photoUrl.toString()
-
-                val userName = firebaseUser.displayName
-                var firstName = ""
-                var lastName = ""
-
-                if (userName!!.indexOf(' ') != -1) {
-                    firstName = userName.substring(0, userName.indexOf(' '))
-                    lastName = userName.substring(userName.indexOf(' ') + 1)
-                } else {
-                    firstName = userName
-                    lastName = ""
-                }
 
                 if (authResult.additionalUserInfo!!.isNewUser) {
-                    val userData = hashMapOf(
-                        "firstName" to firstName,
-                        "lastName" to lastName,
-                        "email" to email!!,
-                        "phoneNumber" to "",
-                        "profilePicUri" to profilePicUri
-                    )
-
-                    addUser(firebaseUser.uid, userData)
-                } else {
-                    Log.d("GOOGLE_LOGIN", "googleLogin: Existing account ...")
+                    addUser(firebaseUser!!.uid, userData)
+                }
+                else {
+                    Log.d(TAG, "googleLogin: Existing account ...")
                 }
                 error = ""
 
             } catch (e: Exception) {
-                Log.d("GOOGLE_LOGIN", "googleLogin: Error logging in: ${e.message}")
+                Log.d(TAG, "googleLogin: Error logging in: ${e.message}")
                 error = "Google Login Error: ${e.message.toString()}"
+            }
+        }
+
+        suspend fun facebookLogin(token: AccessToken) {
+            val TAG = "FACEBOOK_LOGIN"
+
+            try {
+                val credential = FacebookAuthProvider.getCredential(token.token)
+                val authResult = auth().signInWithCredential(credential).await()
+
+                Log.d(TAG, "signInWithCredential:success")
+
+                val userData = getUserData()
+
+                val firebaseUser = auth().currentUser
+
+                if (authResult.additionalUserInfo!!.isNewUser) {
+                    addUser(firebaseUser!!.uid, userData)
+                }
+                else {
+                    Log.d(TAG, "facebookLogin: Existing account ...")
+                }
+                error = ""
+            }
+            catch (e: Exception) {
+                Log.d(TAG, "facebookLogin: ${e.message}")
             }
         }
 
@@ -158,6 +167,32 @@ class Database {
             catch (e: Exception) {
                 Log.w(FIREBASE_TAG, "Failure", e)
             }
+        }
+
+        private fun getUserData(): HashMap<String, String> {
+            val firebaseUser = auth().currentUser
+            val email = firebaseUser!!.email
+            val profilePicUri = firebaseUser.photoUrl.toString()
+
+            val userName = firebaseUser.displayName
+            val firstName: String
+            val lastName: String
+
+            if (userName!!.indexOf(' ') != -1) {
+                firstName = userName.substring(0, userName.indexOf(' '))
+                lastName = userName.substring(userName.indexOf(' ') + 1)
+            } else {
+                firstName = userName
+                lastName = ""
+            }
+
+            return hashMapOf(
+                "firstName" to firstName,
+                "lastName" to lastName,
+                "email" to email!!,
+                "phoneNumber" to "",
+                "profilePicUri" to profilePicUri
+            )
         }
     }
 }
