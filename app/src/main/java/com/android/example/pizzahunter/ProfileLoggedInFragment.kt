@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.android.example.pizzahunter.databinding.FragmentProfileLoggedInBinding
+import com.facebook.AccessToken
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
 class ProfileLoggedInFragment : Fragment() {
@@ -44,9 +46,25 @@ class ProfileLoggedInFragment : Fragment() {
         val googleSignInClient = GoogleSignIn.getClient(activity as AppCompatActivity, gso)
 
         binding.logoutButton.setOnClickListener {
+            val mainActivity = requireActivity() as MainActivity
+            mainActivity.showLoadingScreen(true)
             Database.signOut()
             googleSignInClient.revokeAccess()
             LoginManager.getInstance().logOut()
+            mainActivity.showLoadingScreen(false)
+        }
+
+        lifecycleScope.launch {
+            var imageUrl: String = Database.getUser()?.get("profilePicUri").toString()
+
+            if (imageUrl.indexOf("facebook") != -1) {
+                val facebookAccessToken = AccessToken.getCurrentAccessToken()?.token
+                imageUrl = "$imageUrl?access_token=$facebookAccessToken"
+            }
+
+            if (imageUrl != "null" && imageUrl != "") {
+                Picasso.get().load(imageUrl).into(binding.profileImageImageview)
+            }
         }
 
         return binding.root

@@ -65,6 +65,7 @@
     <!--other-->
     <string name="something_went_wrong">Ceva nu a mers bine. Te rugam incearca din nou.</string>
     <string name="profile_image">Profile Image</string>
+    <string name="main_activity_scrollview">Main Activity Scrollview</string>
 
     <!--Facebook login-->
     <string name="facebook_app_id">641036353668223</string>

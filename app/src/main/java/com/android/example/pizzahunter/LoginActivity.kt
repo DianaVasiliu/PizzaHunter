@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
 
         val googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         binding.facebookButton.setOnClickListener {
             LoginManager.getInstance().logInWithReadPermissions(this, listOf("email", "public_profile"))
