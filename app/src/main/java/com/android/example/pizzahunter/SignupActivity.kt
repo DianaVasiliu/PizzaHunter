@@ -49,8 +49,6 @@ class SignupActivity : AppCompatActivity(), CoroutineScope {
                 launch {
                     val user = signUp(email, password)
                     if (user != null) {
-                        // TODO: reset navigation stack
-                        // TODO: reset account page UI (load the logged-in fragment)
                         val dbUser = hashMapOf(
                             "firstName" to firstName,
                             "lastName" to lastName,

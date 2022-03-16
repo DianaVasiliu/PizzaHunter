@@ -89,18 +89,20 @@ class MainActivity : AppCompatActivity() {
             } else {
                 profileFragment = profileLoggedOutFragment
                 if (currentFragmentIndex == 3) {
-                    replaceFragment(profileLoggedOutFragment)
+                    replaceFragment(profileFragment)
                 }
             }
         }
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container_view, fragment)
-            commit()
+        if (!isDestroyed) {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container_view, fragment)
+                commit()
+            }
+            currentFragmentIndex = fragmentToIndex(fragment)
         }
-        currentFragmentIndex = fragmentToIndex(fragment)
     }
 
     private fun fragmentToIndex(fragment: Fragment) : Int {

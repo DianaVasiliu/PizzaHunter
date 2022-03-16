@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.android.example.pizzahunter.databinding.FragmentProfileLoggedInBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import kotlinx.coroutines.launch
 
 class ProfileLoggedInFragment : Fragment() {
@@ -31,8 +33,18 @@ class ProfileLoggedInFragment : Fragment() {
             }
         }
 
+        val gso: GoogleSignInOptions =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .requestProfile()
+                .build()
+
+        val googleSignInClient = GoogleSignIn.getClient(activity as AppCompatActivity, gso)
+
         binding.logoutButton.setOnClickListener {
             Database.signOut()
+            googleSignInClient.revokeAccess()
         }
 
         return binding.root

@@ -1,8 +1,10 @@
 package com.android.example.pizzahunter
 
 import android.util.Log
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -85,6 +87,51 @@ class Database {
             }
         }
 
+        suspend fun googleLogin(account: GoogleSignInAccount?) {
+            Log.d("GOOGLE_LOGIN", "googleLogin: begin firebase google login")
+
+            try {
+                val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
+                val authResult = auth().signInWithCredential(credential).await()
+                Log.d("GOOGLE_LOGIN", "googleLogin: success")
+
+                val firebaseUser = auth().currentUser
+                val email = firebaseUser!!.email
+                val profilePicUri = firebaseUser.photoUrl.toString()
+
+                val userName = firebaseUser.displayName
+                var firstName = ""
+                var lastName = ""
+
+                if (userName!!.indexOf(' ') != -1) {
+                    firstName = userName.substring(0, userName.indexOf(' '))
+                    lastName = userName.substring(userName.indexOf(' ') + 1)
+                } else {
+                    firstName = userName
+                    lastName = ""
+                }
+
+                if (authResult.additionalUserInfo!!.isNewUser) {
+                    val userData = hashMapOf(
+                        "firstName" to firstName,
+                        "lastName" to lastName,
+                        "email" to email!!,
+                        "phoneNumber" to "",
+                        "profilePicUri" to profilePicUri
+                    )
+
+                    addUser(firebaseUser.uid, userData)
+                } else {
+                    Log.d("GOOGLE_LOGIN", "googleLogin: Existing account ...")
+                }
+                error = ""
+
+            } catch (e: Exception) {
+                Log.d("GOOGLE_LOGIN", "googleLogin: Error logging in: ${e.message}")
+                error = "Google Login Error: ${e.message.toString()}"
+            }
+        }
+
         fun signOut() {
             auth().signOut()
         }
@@ -97,6 +144,10 @@ class Database {
 
             if (!dataOk) {
                 return
+            }
+
+            if (!data.containsKey("profilePicUri")) {
+                data["profilePicUri"] = ""
             }
 
             try {
