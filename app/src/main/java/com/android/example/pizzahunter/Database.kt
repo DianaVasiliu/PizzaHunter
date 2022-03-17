@@ -1,5 +1,6 @@
 package com.android.example.pizzahunter
 
+import android.net.Uri
 import android.util.Log
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -11,6 +12,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -34,6 +37,10 @@ class Database {
 
         private fun auth() : FirebaseAuth {
             return Firebase.auth
+        }
+
+        private fun storage() : FirebaseStorage {
+            return Firebase.storage
         }
 
         fun onAuthStateChange(callback: () -> Unit) {
@@ -193,6 +200,45 @@ class Database {
                 "phoneNumber" to "",
                 "profilePicUri" to profilePicUri
             )
+        }
+
+        suspend fun updateUser(data: HashMap<String, Any?>) {
+            try {
+                val db = firestore()
+                val id = auth().currentUser?.uid.toString()
+                db.collection("users").document(id).update(data).await()
+                Log.d(FIREBASE_TAG, "Successfully updated $id")
+            }
+            catch (e: Exception) {
+                Log.w(FIREBASE_TAG, "Failure", e)
+            }
+        }
+
+        suspend fun loadProfilePicture(uri: Uri?) {
+            if (uri == null) {
+                return
+            }
+
+            try {
+                val storageRef = storage().reference
+                val profilePicRef = storageRef.child("profilePics/${auth().currentUser?.uid}")
+                profilePicRef.putFile(uri).await()
+                Log.d(FIREBASE_TAG, "Successfully uploaded file")
+            }
+            catch (e: Exception) {
+                Log.d(FIREBASE_TAG, "Failed uploading file: ${e.message}")
+            }
+        }
+
+        suspend fun getProfilePictureUri(): Uri? {
+            return try {
+                val storageRef = storage().reference
+                val profilePicRef = storageRef.child("profilePics/${auth().currentUser?.uid}")
+                profilePicRef.downloadUrl.await()
+            } catch (e: Exception) {
+                Log.d("PROFILE_PICTURE_URI", "${e.message}")
+                null
+            }
         }
     }
 }

@@ -13,9 +13,11 @@ class MenuFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.menu_title)
         val binding = DataBindingUtil.inflate<FragmentMenuBinding>(inflater, R.layout.fragment_menu, container, false)
+
+        (activity as MainActivity).showChangePictureModal(false)
 
         return binding.root
     }

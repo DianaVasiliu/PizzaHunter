@@ -21,6 +21,8 @@ class HomeFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.home_title)
         val binding = DataBindingUtil.inflate<FragmentHomeBinding>(inflater, R.layout.fragment_home, container, false)
 
+        (activity as MainActivity).showChangePictureModal(false)
+
         lifecycleScope.launch {
             if (Database.isUserLoggedIn()) {
                 val user = Database.getUser()

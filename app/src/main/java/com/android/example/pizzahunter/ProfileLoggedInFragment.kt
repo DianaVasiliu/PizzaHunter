@@ -24,6 +24,12 @@ class ProfileLoggedInFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.profile_title)
         val binding = DataBindingUtil.inflate<FragmentProfileLoggedInBinding>(inflater, R.layout.fragment_profile_logged_in, container, false)
 
+        (activity as MainActivity).showChangePictureModal(false)
+
+        binding.profileImage.setOnClickListener {
+            (activity as MainActivity).showChangePictureModal(true)
+        }
+
         lifecycleScope.launch {
             if (Database.isUserLoggedIn()) {
                 val user = Database.getUser()

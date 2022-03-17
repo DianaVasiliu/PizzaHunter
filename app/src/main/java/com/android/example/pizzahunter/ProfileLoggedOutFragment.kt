@@ -14,9 +14,11 @@ class ProfileLoggedOutFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.profile_title)
         val binding = DataBindingUtil.inflate<FragmentProfileLoggedOutBinding>(inflater, R.layout.fragment_profile_logged_out, container, false)
+
+        (activity as MainActivity).showChangePictureModal(false)
 
         binding.loginButton.button.setOnClickListener {
             val intent = Intent(activity, LoginActivity::class.java)

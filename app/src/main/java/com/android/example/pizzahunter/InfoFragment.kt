@@ -15,10 +15,11 @@ class InfoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.info_title)
-
         val binding = DataBindingUtil.inflate<FragmentInfoBinding>(inflater, R.layout.fragment_info, container, false)
+
+        (activity as MainActivity).showChangePictureModal(false)
 
         val infoButtons : MutableList<InfoButtonBinding> = mutableListOf(
             binding.locationButton,

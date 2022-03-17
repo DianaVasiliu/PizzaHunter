@@ -39,6 +39,8 @@
     <string name="video_play_button">Video play button</string>
     <string name="facebook_login_button">Facebook Login Button</string>
     <string name="google_login_button">Google Login Button</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="main_activity_scrollview">Main Activity Scrollview</string>
 
     <!--app text-->
     <string name="logged_out_warning">Pentru a continua, te rugam sa te autentifici sau sa iti creezi un cont nou.</string>
@@ -61,11 +63,15 @@
     <string name="profile_button_2">Favorite</string>
     <string name="profile_button_3">Comenzile mele</string>
     <string name="profile_button_4">Delogare</string>
+    <string name="load_photo_button">Incarca din galerie</string>
+    <string name="take_photo_button">Fa o poza</string>
 
     <!--other-->
     <string name="something_went_wrong">Ceva nu a mers bine. Te rugam incearca din nou.</string>
-    <string name="profile_image">Profile Image</string>
-    <string name="main_activity_scrollview">Main Activity Scrollview</string>
+    <string name="accept_photo">Accept</string>
+    <string name="reject_photo">Respinge</string>
+    <string name="must_be_portrait_mode">Tineti telefonul in modul portret</string>
+    <string name="permissions_not_granted">Permisiunile nu au fost acceptate</string>
 
     <!--Facebook login-->
     <string name="facebook_app_id">641036353668223</string>
