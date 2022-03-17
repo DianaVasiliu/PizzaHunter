@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import com.android.example.pizzahunter.databinding.ActivityLoginBinding
@@ -31,10 +33,13 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
         get() = Dispatchers.Main
 
     private lateinit var callbackManager: CallbackManager
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
     private lateinit var binding: ActivityLoginBinding
-    private companion object {
-        private const val REQ_CODE_SIGN_IN = 100
+
+    companion object {
+        private const val FACEBOOK_LOGIN = "FACEBOOK_LOGIN"
+        private const val GOOGLE_LOGIN = "GOOGLE_LOGIN"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +53,11 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
 
         LoginManager.getInstance().registerCallback(callbackManager, object: FacebookCallback<LoginResult> {
             override fun onCancel() {
-                Log.d("FACEBOOK_LOGIN", "onCancel")
+                Log.d(FACEBOOK_LOGIN, "onCancel")
             }
 
             override fun onError(error: FacebookException) {
-                Log.d("FACEBOOK_LOGIN", "onError: ${error.message}")
+                Log.d(FACEBOOK_LOGIN, "onError: ${error.message}")
             }
 
             override fun onSuccess(result: LoginResult) {
@@ -78,15 +83,45 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
 
         val googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            val resultCode = result!!.resultCode
+            val data = result.data
+
+            if (resultCode == RESULT_OK) {
+                val accountTask = GoogleSignIn.getSignedInAccountFromIntent(data)
+
+                try {
+                    val account = accountTask.getResult(ApiException::class.java)
+
+                    launch {
+                        binding.loadingScreen.visibility = View.VISIBLE
+                        Database.googleLogin(account)
+                        if (Database.getError() == "") {
+                            finish()
+                        } else {
+                            binding.loadingScreen.visibility = View.GONE
+                        }
+                    }
+
+                } catch (e: Exception) {
+                    Log.d(GOOGLE_LOGIN, "onActivityResult: ${e.message}")
+                }
+            } else {
+                binding.loadingScreen.visibility = View.GONE
+            }
+        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         binding.facebookButton.setOnClickListener {
-            LoginManager.getInstance().logInWithReadPermissions(this, listOf("email", "public_profile"))
+            LoginManager.getInstance().logInWithReadPermissions(this, callbackManager, listOf("email", "public_profile"))
         }
 
         binding.googleButton.setOnClickListener {
+            binding.loadingScreen.visibility = View.VISIBLE
             val intent = googleSignInClient.signInIntent
-            startActivityForResult(intent, REQ_CODE_SIGN_IN)
+            activityResultLauncher.launch(intent)
         }
 
         binding.loginInnerContainer.setOnClickListener {
@@ -121,33 +156,6 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
             }
         }
 
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQ_CODE_SIGN_IN) {
-            val accountTask = GoogleSignIn.getSignedInAccountFromIntent(data)
-
-            try {
-                val account = accountTask.getResult(ApiException::class.java)
-
-                launch {
-                    binding.loadingScreen.visibility = View.VISIBLE
-                    Database.googleLogin(account)
-                    if (Database.getError() == "") {
-                        finish()
-                    }
-                    else {
-                        binding.loadingScreen.visibility = View.GONE
-                    }
-                }
-
-            } catch (e: Exception) {
-                Log.d("GOOGLE_LOGIN", "onActivityResult: ${e.message}")
-            }
-        }
     }
 
     private fun showStringError(error: TextView, message: String) {
