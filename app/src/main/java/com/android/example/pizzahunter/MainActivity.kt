@@ -15,6 +15,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -55,6 +56,15 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private lateinit var profileFragment: Fragment
     private var currentFragmentIndex: Int = 0
     private var currentFragment: Fragment = homeFragment
+
+    private val getPreviewImage = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) {
+        if (it != null) {
+            selectedPhotoUri = it
+            loadPhoto(it)
+        }
+    }
 
     companion object {
         private const val CURRENT_FRAGMENT_INDEX = "CURRENT_FRAGMENT_INDEX"
@@ -99,7 +109,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
 
         binding.loadPhotoButton.button.setOnClickListener {
-            loadPhoto(selectedPhotoUri)
+            openGallery()
         }
 
         binding.acceptPhotoButton.setOnClickListener {
@@ -383,5 +393,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 transaction.commit()
             }
         }
+    }
+
+    private fun openGallery() {
+        getPreviewImage.launch("image/*")
     }
 }
