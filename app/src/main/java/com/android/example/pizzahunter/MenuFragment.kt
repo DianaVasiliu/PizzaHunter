@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.example.pizzahunter.databinding.FragmentMenuBinding
 
 class MenuFragment : Fragment() {
@@ -18,6 +19,11 @@ class MenuFragment : Fragment() {
         val binding = DataBindingUtil.inflate<FragmentMenuBinding>(inflater, R.layout.fragment_menu, container, false)
 
         (activity as MainActivity).showChangePictureModal(false)
+
+        val food = listOf<Food>()
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.adapter = FoodAdapter(food)
 
         return binding.root
     }

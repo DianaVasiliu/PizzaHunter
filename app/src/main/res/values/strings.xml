@@ -41,6 +41,9 @@
     <string name="google_login_button">Google Login Button</string>
     <string name="profile_image">Profile Image</string>
     <string name="main_activity_scrollview">Main Activity Scrollview</string>
+    <string name="food_preview_image">Food preview image</string>
+    <string name="vegetarian_icon">Vegetarian icon</string>
+    <string name="spicy_icon">Spicy icon</string>
 
     <!--app text-->
     <string name="logged_out_warning">Pentru a continua, te rugam sa te autentifici sau sa iti creezi un cont nou.</string>
@@ -72,10 +75,21 @@
     <string name="reject_photo">Respinge</string>
     <string name="must_be_portrait_mode">Tineti telefonul in modul portret</string>
     <string name="permissions_not_granted">Permisiunile nu au fost acceptate</string>
+    <string name="price">Pret</string>
+    <string name="currency">Lei</string>
 
     <!--Facebook login-->
     <string name="facebook_app_id">641036353668223</string>
     <string name="fb_login_protocol_scheme">fb1234</string>
     <string name="facebook_client_token">bfc2ac74a20e8637ac61ed52b709a6ea</string>
+
+    <!--Menu buttons-->
+    <string name="pizza_menu_button">PIZZA</string>
+    <string name="pasta_menu_button">PASTE</string>
+    <string name="salads_menu_button">SALATE</string>
+    <string name="dessert_menu_button">DESERT</string>
+    <string name="drinks_menu_button">BAUTURI</string>
+    <string name="sauces_menu_button">SOSURI</string>
+    <string name="sides_menu_button">SIDES</string>
 
 </resources>

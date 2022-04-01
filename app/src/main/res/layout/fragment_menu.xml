@@ -8,15 +8,88 @@
         android:layout_height="match_parent"
         tools:context=".MenuFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MENIU"
+        <HorizontalScrollView
+            android:id="@+id/menu_categories_scrollview"
+            android:layout_width="409dp"
+            android:layout_height="70dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pizza_menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="@string/pizza_menu_button" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pasta_menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="@string/pasta_menu_button" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/salads_menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="@string/salads_menu_button" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dessert_menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="@string/dessert_menu_button" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/drinks_menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="@string/drinks_menu_button" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sauces_menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="@string/sauces_menu_button" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sides_menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="@string/sides_menu_button" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/menu_categories_scrollview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
