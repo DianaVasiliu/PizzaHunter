@@ -1,4 +1,4 @@
-package com.android.example.pizzahunter
+package com.android.example.pizzahunter.models
 
 data class Food (
     val id: Int,

@@ -1,4 +1,4 @@
-package com.android.example.pizzahunter
+package com.android.example.pizzahunter.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.android.example.pizzahunter.ui.LoginActivity
+import com.android.example.pizzahunter.ui.MainActivity
+import com.android.example.pizzahunter.R
 import com.android.example.pizzahunter.databinding.FragmentProfileLoggedOutBinding
+import com.android.example.pizzahunter.ui.SignupActivity
 
 class ProfileLoggedOutFragment : Fragment() {
     override fun onCreateView(
@@ -16,7 +20,8 @@ class ProfileLoggedOutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.profile_title)
-        val binding = DataBindingUtil.inflate<FragmentProfileLoggedOutBinding>(inflater, R.layout.fragment_profile_logged_out, container, false)
+        val binding = DataBindingUtil.inflate<FragmentProfileLoggedOutBinding>(inflater,
+            R.layout.fragment_profile_logged_out, container, false)
 
         (activity as MainActivity).showChangePictureModal(false)
 

@@ -1,12 +1,12 @@
-package com.android.example.pizzahunter
+package com.android.example.pizzahunter.ui
 
-import android.content.res.Resources
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.android.example.pizzahunter.R
 import com.android.example.pizzahunter.databinding.LayoutFoodBinding
+import com.android.example.pizzahunter.models.Food
 import com.squareup.picasso.Picasso
 
 class FoodAdapter(private val foods: List<Food>) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {

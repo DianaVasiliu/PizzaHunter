@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:background="@color/background"
         android:orientation="vertical"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -27,7 +27,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragment_container_view"
-                android:name="com.android.example.pizzahunter.HomeFragment"
+                android:name="com.android.example.pizzahunter.ui.fragments.HomeFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"

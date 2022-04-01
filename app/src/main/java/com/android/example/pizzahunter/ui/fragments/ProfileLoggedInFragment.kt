@@ -1,4 +1,4 @@
-package com.android.example.pizzahunter
+package com.android.example.pizzahunter.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.android.example.pizzahunter.database.Database
+import com.android.example.pizzahunter.ui.MainActivity
+import com.android.example.pizzahunter.R
 import com.android.example.pizzahunter.databinding.FragmentProfileLoggedInBinding
 import com.facebook.AccessToken
 import com.facebook.login.LoginManager
@@ -22,7 +25,8 @@ class ProfileLoggedInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.profile_title)
-        val binding = DataBindingUtil.inflate<FragmentProfileLoggedInBinding>(inflater, R.layout.fragment_profile_logged_in, container, false)
+        val binding = DataBindingUtil.inflate<FragmentProfileLoggedInBinding>(inflater,
+            R.layout.fragment_profile_logged_in, container, false)
 
         (activity as MainActivity).showChangePictureModal(false)
 

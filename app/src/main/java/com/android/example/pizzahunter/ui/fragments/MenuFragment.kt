@@ -1,4 +1,4 @@
-package com.android.example.pizzahunter
+package com.android.example.pizzahunter.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.example.pizzahunter.*
+import com.android.example.pizzahunter.api.FoodApi
 import com.android.example.pizzahunter.databinding.FragmentMenuBinding
+import com.android.example.pizzahunter.models.Food
+import com.android.example.pizzahunter.ui.FoodAdapter
+import com.android.example.pizzahunter.ui.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

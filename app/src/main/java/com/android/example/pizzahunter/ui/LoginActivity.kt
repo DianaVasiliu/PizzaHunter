@@ -1,4 +1,4 @@
-package com.android.example.pizzahunter
+package com.android.example.pizzahunter.ui
 
 import android.content.Context
 import android.content.Intent
@@ -12,6 +12,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
+import com.android.example.pizzahunter.database.Database
+import com.android.example.pizzahunter.R
 import com.android.example.pizzahunter.databinding.ActivityLoginBinding
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback

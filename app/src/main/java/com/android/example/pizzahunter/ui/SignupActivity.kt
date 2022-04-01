@@ -1,4 +1,4 @@
-package com.android.example.pizzahunter
+package com.android.example.pizzahunter.ui
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
+import com.android.example.pizzahunter.database.Database
+import com.android.example.pizzahunter.R
 import com.android.example.pizzahunter.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
@@ -28,7 +30,9 @@ class SignupActivity : AppCompatActivity(), CoroutineScope {
         this.supportActionBar?.title = getString(R.string.signup_title)
         this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val binding = DataBindingUtil.setContentView<ActivitySignupBinding>(this, R.layout.activity_signup)
+        val binding = DataBindingUtil.setContentView<ActivitySignupBinding>(this,
+            R.layout.activity_signup
+        )
 
         binding.signupInnerContainer.setOnClickListener {
             hideKeyboard(it)

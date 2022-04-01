@@ -1,7 +1,8 @@
-package com.android.example.pizzahunter
+package com.android.example.pizzahunter.database
 
 import android.net.Uri
 import android.util.Log
+import com.android.example.pizzahunter.Constants
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FacebookAuthProvider

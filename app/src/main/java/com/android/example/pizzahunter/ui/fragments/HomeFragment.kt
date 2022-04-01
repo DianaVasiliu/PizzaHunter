@@ -1,4 +1,4 @@
-package com.android.example.pizzahunter
+package com.android.example.pizzahunter.ui.fragments
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.android.example.pizzahunter.database.Database
+import com.android.example.pizzahunter.R
 import com.android.example.pizzahunter.databinding.FragmentHomeBinding
+import com.android.example.pizzahunter.ui.MainActivity
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -19,7 +22,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.home_title)
-        val binding = DataBindingUtil.inflate<FragmentHomeBinding>(inflater, R.layout.fragment_home, container, false)
+        val binding = DataBindingUtil.inflate<FragmentHomeBinding>(inflater,
+            R.layout.fragment_home, container, false)
 
         (activity as MainActivity).showChangePictureModal(false)
 
@@ -51,7 +55,8 @@ class HomeFragment : Fragment() {
             binding.videoView.seekTo(0)
             binding.videoView.background = Drawable.createFromPath(
                 (activity as AppCompatActivity).packageName +
-                        "/" + R.mipmap.thumbnail)
+                        "/" + R.mipmap.thumbnail
+            )
         }
 
         binding.videoView.setOnClickListener {

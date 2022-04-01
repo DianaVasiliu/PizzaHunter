@@ -12,7 +12,7 @@
         android:layout_marginEnd="@dimen/universal_margin"
         android:layout_marginBottom="@dimen/universal_margin"
         android:orientation="vertical"
-        tools:context=".ProfileLoggedOutFragment">
+        tools:context=".ui.fragments.ProfileLoggedOutFragment">
 
 
         <ImageView

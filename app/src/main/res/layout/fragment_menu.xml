@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MenuFragment">
+        tools:context=".ui.fragments.MenuFragment">
 
         <HorizontalScrollView
             android:id="@+id/menu_categories_scrollview"

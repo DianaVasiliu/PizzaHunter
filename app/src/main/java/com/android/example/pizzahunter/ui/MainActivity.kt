@@ -1,4 +1,4 @@
-package com.android.example.pizzahunter
+package com.android.example.pizzahunter.ui
 
 import android.Manifest
 import android.content.ContentValues
@@ -23,7 +23,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.android.example.pizzahunter.database.Database
+import com.android.example.pizzahunter.ui.fragments.HomeFragment
+import com.android.example.pizzahunter.ui.fragments.InfoFragment
+import com.android.example.pizzahunter.R
 import com.android.example.pizzahunter.databinding.ActivityMainBinding
+import com.android.example.pizzahunter.ui.fragments.MenuFragment
+import com.android.example.pizzahunter.ui.fragments.ProfileLoggedInFragment
+import com.android.example.pizzahunter.ui.fragments.ProfileLoggedOutFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
