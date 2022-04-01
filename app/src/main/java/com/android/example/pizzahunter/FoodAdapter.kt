@@ -1,6 +1,7 @@
 package com.android.example.pizzahunter
 
 import android.content.res.Resources
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import com.android.example.pizzahunter.databinding.LayoutFoodBinding
 import com.squareup.picasso.Picasso
 
 class FoodAdapter(private val foods: List<Food>) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
-    lateinit var binding: LayoutFoodBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
         return FoodViewHolder(
@@ -21,9 +21,10 @@ class FoodAdapter(private val foods: List<Food>) : RecyclerView.Adapter<FoodAdap
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val food = foods[position]
+        val currency = holder.binding.imageView.context.resources.getString(R.string.currency)
 
         val description = if (food.description != "") food.description else food.ingredients.joinToString(", ")
-        val price = food.price.toString() + " " + Resources.getSystem().getString(R.string.currency)
+        val price = food.price.toString() + " " + currency
 
         Picasso.get().load(food.image).into(holder.binding.imageView)
         holder.binding.textViewName.text = food.name
