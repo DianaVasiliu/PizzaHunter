@@ -77,6 +77,7 @@
     <string name="permissions_not_granted">Permisiunile nu au fost acceptate</string>
     <string name="price">Pret</string>
     <string name="currency">Lei</string>
+    <string name="search">Search</string>
 
     <!--Facebook login-->
     <string name="facebook_app_id">641036353668223</string>

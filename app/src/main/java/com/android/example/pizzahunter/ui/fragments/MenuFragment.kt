@@ -1,12 +1,14 @@
 package com.android.example.pizzahunter.ui.fragments
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.example.pizzahunter.*
@@ -20,7 +22,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MenuFragment : Fragment() {
-    lateinit var binding: FragmentMenuBinding
+    private lateinit var binding: FragmentMenuBinding
+    private var food : List<Food>? = listOf()
+    private lateinit var filteredFoodList : MutableList<Food>
+    private var searchButton: SearchView? = null
+
     private var selectedMenuItem = MenuItems.PIZZA
     private val foodApi = FoodApi()
 
@@ -43,6 +49,8 @@ class MenuFragment : Fragment() {
 
         (activity as MainActivity).showChangePictureModal(false)
 
+        filteredFoodList = mutableListOf()
+
         fetchFood()
 
         binding.refreshLayout.setOnRefreshListener {
@@ -61,6 +69,8 @@ class MenuFragment : Fragment() {
 
         for ((index, menuItem) in menuButtons.withIndex()) {
             menuItem.setOnClickListener {
+                searchButton?.setQuery("", false)
+                searchButton?.isIconified = true
                 selectedMenuItem = when(index) {
                     0 -> MenuItems.PIZZA
                     1 -> MenuItems.PASTA
@@ -74,6 +84,8 @@ class MenuFragment : Fragment() {
                 fetchFood()
             }
         }
+
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -95,10 +107,12 @@ class MenuFragment : Fragment() {
         fetchFunction.enqueue(object : Callback<List<Food>> {
             override fun onResponse(call: Call<List<Food>>, response: Response<List<Food>>) {
                 binding.refreshLayout.isRefreshing = false
-                val food = response.body()
+                food = response.body()
 
                 food?.let {
-                    showFood(food)
+                    filteredFoodList.clear()
+                    filteredFoodList.addAll(it)
+                    showFood()
                 }
             }
 
@@ -109,8 +123,57 @@ class MenuFragment : Fragment() {
         })
     }
 
-    private fun showFood(food: List<Food>) {
+    private fun showFood() {
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
-        binding.recyclerView.adapter = FoodAdapter(food)
+        binding.recyclerView.adapter = FoodAdapter(filteredFoodList)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_action, menu)
+
+        searchButton = menu.findItem(R.id.search_action).actionView as SearchView
+
+        searchButton?.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                hideKeyboard()
+                searchButton?.clearFocus()
+                return true
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filteredFoodList.clear()
+                val searchText = newText!!.lowercase()
+
+                if (searchText.isNotEmpty()) {
+                    food?.forEach {
+                        val name = it.name.lowercase()
+                        val description = it.description.lowercase()
+                        val ingredients = it.ingredients.joinToString(",").lowercase()
+
+                        if(name.contains(searchText) ||
+                            description.contains(searchText) ||
+                            ingredients.contains(searchText)) {
+
+                            filteredFoodList.add(it)
+                        }
+                    }
+                    binding.recyclerView.adapter!!.notifyDataSetChanged()
+                }
+                else {
+                    filteredFoodList.clear()
+                    food?.let { filteredFoodList.addAll(it) }
+                    binding.recyclerView.adapter!!.notifyDataSetChanged()
+                }
+                return false
+            }
+        })
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun hideKeyboard() {
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)
     }
 }
