@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
+import com.android.example.pizzahunter.Constants
 import com.android.example.pizzahunter.database.Database
 import com.android.example.pizzahunter.R
 import com.android.example.pizzahunter.databinding.ActivitySignupBinding
@@ -54,10 +55,10 @@ class SignupActivity : AppCompatActivity(), CoroutineScope {
                     val user = signUp(email, password)
                     if (user != null) {
                         val dbUser = hashMapOf(
-                            "firstName" to firstName,
-                            "lastName" to lastName,
-                            "email" to email,
-                            "phoneNumber" to phoneNumber
+                            Constants.USER_DB_KEYS.FIRST_NAME to firstName,
+                            Constants.USER_DB_KEYS.LAST_NAME to lastName,
+                            Constants.USER_DB_KEYS.EMAIL to email,
+                            Constants.USER_DB_KEYS.PHONE_NUMBER to phoneNumber
                         )
                         Database.addUser(user.uid, dbUser)
                         binding.loadingScreen.visibility = View.GONE

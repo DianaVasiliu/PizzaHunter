@@ -15,10 +15,12 @@
     <string name="profile_title">Contul meu</string>
     <string name="login_title">Intra in cont</string>
     <string name="signup_title">Creeaza cont nou</string>
+    <string name="edit_profile_title">Editeaza profilul</string>
 
     <!--buttons-->
     <string name="login_button">Intra in cont</string>
     <string name="signup_button">Creeaza cont nou</string>
+    <string name="save_button">Salveaza</string>
 
     <!--bottom nav buttons-->
     <string name="home_nav_button">Acasa</string>
@@ -33,6 +35,9 @@
     <string name="first_name">Prenume</string>
     <string name="last_name">Nume</string>
     <string name="phone_number_textinput">Numar de telefon</string>
+    <string name="old_password">Parola Veche</string>
+    <string name="new_password">Parola Noua</string>
+    <string name="confirm_new_password">Confirma Parola Noua</string>
 
     <!--content descriptions-->
     <string name="video_thumbnail">Video thumbnail</string>
@@ -60,6 +65,7 @@
     <string name="error_invalid_phone_number">Numar de telefon invalid</string>
     <string name="error_checkbox">Termenii si conditiile trebuie acceptate</string>
     <string name="error_invalid_credentials">E-mail sau parola gresita</string>
+    <string name="error_provide_passwords">Te rugam sa introduci ambele parole</string>
 
     <!--profile buttons-->
     <string name="profile_button_1">Editeaza profilul</string>
@@ -78,6 +84,8 @@
     <string name="price">Pret</string>
     <string name="currency">Lei</string>
     <string name="search">Search</string>
+    <string name="personal_data_textView">Date personale</string>
+    <string name="password_textView">Parola</string>
 
     <!--Facebook login-->
     <string name="facebook_app_id">641036353668223</string>

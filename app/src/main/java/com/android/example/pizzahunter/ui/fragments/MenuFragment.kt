@@ -172,6 +172,11 @@ class MenuFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        selectedMenuItem = MenuItems.PIZZA
+    }
+
     private fun hideKeyboard() {
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)

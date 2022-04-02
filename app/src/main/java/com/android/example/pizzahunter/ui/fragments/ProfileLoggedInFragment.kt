@@ -1,5 +1,6 @@
 package com.android.example.pizzahunter.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import com.android.example.pizzahunter.database.Database
 import com.android.example.pizzahunter.ui.MainActivity
 import com.android.example.pizzahunter.R
 import com.android.example.pizzahunter.databinding.FragmentProfileLoggedInBinding
+import com.android.example.pizzahunter.ui.EditProfileActivity
+import com.android.example.pizzahunter.ui.SignupActivity
 import com.facebook.AccessToken
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -29,6 +32,11 @@ class ProfileLoggedInFragment : Fragment() {
             R.layout.fragment_profile_logged_in, container, false)
 
         (activity as MainActivity).showChangePictureModal(false)
+
+        binding.editProfileButton.setOnClickListener {
+            val intent = Intent(activity, EditProfileActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.profileImage.setOnClickListener {
             (activity as MainActivity).showChangePictureModal(true)
@@ -79,5 +87,4 @@ class ProfileLoggedInFragment : Fragment() {
 
         return binding.root
     }
-
 }

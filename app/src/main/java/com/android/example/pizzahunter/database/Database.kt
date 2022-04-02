@@ -5,10 +5,9 @@ import android.util.Log
 import com.android.example.pizzahunter.Constants
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -154,17 +153,17 @@ class Database {
         }
 
         suspend fun addUser(id: String, data: HashMap<String, String>) {
-            val dataOk = data.containsKey("firstName")
-                    && data.containsKey("lastName")
-                    && data.containsKey("email")
-                    && data.containsKey("phoneNumber")
+            val dataOk = data.containsKey(Constants.USER_DB_KEYS.FIRST_NAME)
+                    && data.containsKey(Constants.USER_DB_KEYS.LAST_NAME)
+                    && data.containsKey(Constants.USER_DB_KEYS.EMAIL)
+                    && data.containsKey(Constants.USER_DB_KEYS.PHONE_NUMBER)
 
             if (!dataOk) {
                 return
             }
 
-            if (!data.containsKey("profilePicUri")) {
-                data["profilePicUri"] = ""
+            if (!data.containsKey(Constants.USER_DB_KEYS.PROFILE_PIC_URI)) {
+                data[Constants.USER_DB_KEYS.PROFILE_PIC_URI] = ""
             }
 
             try {
@@ -195,11 +194,11 @@ class Database {
             }
 
             return hashMapOf(
-                "firstName" to firstName,
-                "lastName" to lastName,
-                "email" to email!!,
-                "phoneNumber" to "",
-                "profilePicUri" to profilePicUri
+                Constants.USER_DB_KEYS.FIRST_NAME to firstName,
+                Constants.USER_DB_KEYS.LAST_NAME to lastName,
+                Constants.USER_DB_KEYS.EMAIL to email!!,
+                Constants.USER_DB_KEYS.PHONE_NUMBER to "",
+                Constants.USER_DB_KEYS.PROFILE_PIC_URI to profilePicUri
             )
         }
 
@@ -237,9 +236,26 @@ class Database {
                 val profilePicRef = storageRef.child("profilePics/${auth().currentUser?.uid}")
                 profilePicRef.downloadUrl.await()
             } catch (e: Exception) {
-                Log.d("PROFILE_PICTURE_URI", "${e.message}")
                 null
             }
+        }
+
+        suspend fun updatePassword(oldPassword: String, newPassword: String): String? {
+            val user = auth().currentUser ?: return Constants.ERRORS.USER_NOT_LOGGED_IN
+            var error : String? = null
+
+            try {
+                val credential = EmailAuthProvider.getCredential(user.email.toString(), oldPassword)
+                user.reauthenticate(credential).await()
+                user.updatePassword(newPassword).await()
+            }
+            catch (e: FirebaseAuthInvalidCredentialsException) {
+                error = Constants.ERRORS.INVALID_PASSWORD
+            }
+            catch (e: Exception) {
+                error = Constants.ERRORS.COULDNT_UPDATE_PASSWORD
+            }
+            return error
         }
     }
 }
