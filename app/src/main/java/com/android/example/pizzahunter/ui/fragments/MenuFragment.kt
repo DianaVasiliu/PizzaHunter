@@ -21,6 +21,18 @@ import retrofit2.Response
 
 class MenuFragment : Fragment() {
     lateinit var binding: FragmentMenuBinding
+    private var selectedMenuItem = MenuItems.PIZZA
+    private val foodApi = FoodApi()
+
+    object MenuItems {
+        const val PIZZA = "pizza"
+        const val PASTA = "pasta"
+        const val SALADS = "salads"
+        const val DESSERTS = "desserts"
+        const val DRINKS = "drinks"
+        const val SAUCES = "sauces"
+        const val SIDES = "sides"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +43,37 @@ class MenuFragment : Fragment() {
 
         (activity as MainActivity).showChangePictureModal(false)
 
+        fetchFood()
+
         binding.refreshLayout.setOnRefreshListener {
             fetchFood()
         }
 
-        fetchFood()
+        val menuButtons = listOf(
+            binding.pizzaMenuButton,
+            binding.pastaMenuButton,
+            binding.saladsMenuButton,
+            binding.dessertMenuButton,
+            binding.drinksMenuButton,
+            binding.saucesMenuButton,
+            binding.sidesMenuButton
+        )
+
+        for ((index, menuItem) in menuButtons.withIndex()) {
+            menuItem.setOnClickListener {
+                selectedMenuItem = when(index) {
+                    0 -> MenuItems.PIZZA
+                    1 -> MenuItems.PASTA
+                    2 -> MenuItems.SALADS
+                    3 -> MenuItems.DESSERTS
+                    4 -> MenuItems.DRINKS
+                    5 -> MenuItems.SAUCES
+                    6 -> MenuItems.SIDES
+                    else -> MenuItems.PIZZA
+                }
+                fetchFood()
+            }
+        }
 
         return binding.root
     }
@@ -43,7 +81,18 @@ class MenuFragment : Fragment() {
     private fun fetchFood() {
         binding.refreshLayout.isRefreshing = true
 
-        FoodApi().getPizza().enqueue(object : Callback<List<Food>> {
+        val fetchFunction = when(selectedMenuItem) {
+            MenuItems.PIZZA -> foodApi.getPizza()
+            MenuItems.PASTA -> foodApi.getPasta()
+            MenuItems.SALADS -> foodApi.getSalads()
+            MenuItems.DESSERTS -> foodApi.getDesserts()
+            MenuItems.DRINKS -> foodApi.getDrinks()
+            MenuItems.SAUCES -> foodApi.getSauces()
+            MenuItems.SIDES -> foodApi.getSides()
+            else -> foodApi.getPizza()
+        }
+
+        fetchFunction.enqueue(object : Callback<List<Food>> {
             override fun onResponse(call: Call<List<Food>>, response: Response<List<Food>>) {
                 binding.refreshLayout.isRefreshing = false
                 val food = response.body()
@@ -57,7 +106,6 @@ class MenuFragment : Fragment() {
                 binding.refreshLayout.isRefreshing = false
                 Toast.makeText(activity, t.message, Toast.LENGTH_LONG).show()
             }
-
         })
     }
 

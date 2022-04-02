@@ -12,6 +12,24 @@ interface FoodApi {
     @GET("pizza")
     fun getPizza() : Call<List<Food>>
 
+    @GET("pasta")
+    fun getPasta() : Call<List<Food>>
+
+    @GET("salads")
+    fun getSalads() : Call<List<Food>>
+
+    @GET("dessert")
+    fun getDesserts() : Call<List<Food>>
+
+    @GET("drinks")
+    fun getDrinks() : Call<List<Food>>
+
+    @GET("sauces")
+    fun getSauces() : Call<List<Food>>
+
+    @GET("sides")
+    fun getSides() : Call<List<Food>>
+
     companion object {
         operator fun invoke(): FoodApi {
             return Retrofit.Builder()
