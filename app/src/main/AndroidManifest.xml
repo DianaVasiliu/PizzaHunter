@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PizzaHunter">
         <activity
+            android:name=".ui.FoodDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.EditProfileActivity"
             android:exported="false" />
 

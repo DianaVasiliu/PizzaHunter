@@ -1,5 +1,7 @@
 package com.android.example.pizzahunter.models
 
+import java.io.Serializable
+
 data class Food (
     val id: Int,
     val name: String,
@@ -9,4 +11,4 @@ data class Food (
     val vegetarian: Boolean,
     val price: Float,
     val image: String,
-)
+) : Serializable

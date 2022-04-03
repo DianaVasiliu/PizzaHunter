@@ -1,5 +1,6 @@
 package com.android.example.pizzahunter.ui
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,9 @@ import com.android.example.pizzahunter.R
 import com.android.example.pizzahunter.databinding.LayoutFoodBinding
 import com.android.example.pizzahunter.models.Food
 import com.squareup.picasso.Picasso
+import java.io.Serializable
 
-class FoodAdapter(private val foods: List<Food>) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
+class FoodAdapter(private val foods: List<Food>, private val type: String) : RecyclerView.Adapter<FoodViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
         return FoodViewHolder(
@@ -32,8 +34,24 @@ class FoodAdapter(private val foods: List<Food>) : RecyclerView.Adapter<FoodAdap
         holder.binding.chilliIcon.visibility = if (food.spicy) View.VISIBLE else View.GONE
         holder.binding.vegetarianIcon.visibility = if (food.vegetarian) View.VISIBLE else View.GONE
         holder.binding.priceValue.text = price
+
+        holder.food = food
+        holder.type = type
+    }
+}
+
+class FoodViewHolder(val binding: LayoutFoodBinding, var food: Food? = null, var type: String? = null) : RecyclerView.ViewHolder(binding.root) {
+    companion object {
+        const val FOOD_OBJECT_KEY = "FOOD_OBJECT"
+        const val FOOD_TYPE_KEY = "FOOD_TYPE"
     }
 
-    inner class FoodViewHolder(val binding: LayoutFoodBinding) : RecyclerView.ViewHolder(binding.root)
-
+    init {
+        binding.root.setOnClickListener {
+            val intent = Intent(binding.root.context, FoodDetailActivity::class.java)
+            intent.putExtra(FOOD_OBJECT_KEY, food as Serializable)
+            intent.putExtra(FOOD_TYPE_KEY, type)
+            binding.root.context.startActivity(intent)
+        }
+    }
 }

@@ -86,6 +86,10 @@
     <string name="search">Search</string>
     <string name="personal_data_textView">Date personale</string>
     <string name="password_textView">Parola</string>
+    <string name="share">Share</string>
+    <string name="favourites">Favourites</string>
+    <string name="spicy">Iute</string>
+    <string name="vegetarian">Vegetarian</string>
 
     <!--Facebook login-->
     <string name="facebook_app_id">641036353668223</string>
@@ -100,5 +104,11 @@
     <string name="drinks_menu_button">BAUTURI</string>
     <string name="sauces_menu_button">SOSURI</string>
     <string name="sides_menu_button">SIDES</string>
+
+    <!--Food types-->
+    <string name="pizza">Pizza</string>
+    <string name="pasta">Paste</string>
+    <string name="salads">Salata</string>
+    <string name="sauces">Sos</string>
 
 </resources>

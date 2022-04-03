@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.android.example.pizzahunter.Constants
 import com.android.example.pizzahunter.database.Database
 import com.android.example.pizzahunter.ui.MainActivity
 import com.android.example.pizzahunter.R
@@ -45,7 +46,7 @@ class ProfileLoggedInFragment : Fragment() {
         lifecycleScope.launch {
             if (Database.isUserLoggedIn()) {
                 val user = Database.getUser()
-                val greeting = getString(R.string.greeting) + ", ${user?.get("firstName")}!"
+                val greeting = getString(R.string.greeting) + ", ${user?.get(Constants.USER_DB_KEYS.FIRST_NAME)}!"
                 binding.greetingText.text = greeting
             }
             else {
@@ -73,7 +74,7 @@ class ProfileLoggedInFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            var imageUrl: String = Database.getUser()?.get("profilePicUri").toString()
+            var imageUrl: String = Database.getUser()?.get(Constants.USER_DB_KEYS.PROFILE_PIC_URI).toString()
 
             if (imageUrl.indexOf("facebook") != -1) {
                 val facebookAccessToken = AccessToken.getCurrentAccessToken()?.token

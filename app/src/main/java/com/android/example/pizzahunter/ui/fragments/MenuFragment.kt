@@ -27,10 +27,10 @@ class MenuFragment : Fragment() {
     private lateinit var filteredFoodList : MutableList<Food>
     private var searchButton: SearchView? = null
 
-    private var selectedMenuItem = MenuItems.PIZZA
+    private var selectedMenuItem = PIZZA
     private val foodApi = FoodApi()
 
-    object MenuItems {
+    companion object MenuItems {
         const val PIZZA = "pizza"
         const val PASTA = "pasta"
         const val SALADS = "salads"
@@ -72,14 +72,14 @@ class MenuFragment : Fragment() {
                 searchButton?.setQuery("", false)
                 searchButton?.isIconified = true
                 selectedMenuItem = when(index) {
-                    0 -> MenuItems.PIZZA
-                    1 -> MenuItems.PASTA
-                    2 -> MenuItems.SALADS
-                    3 -> MenuItems.DESSERTS
-                    4 -> MenuItems.DRINKS
-                    5 -> MenuItems.SAUCES
-                    6 -> MenuItems.SIDES
-                    else -> MenuItems.PIZZA
+                    0 -> PIZZA
+                    1 -> PASTA
+                    2 -> SALADS
+                    3 -> DESSERTS
+                    4 -> DRINKS
+                    5 -> SAUCES
+                    6 -> SIDES
+                    else -> PIZZA
                 }
                 fetchFood()
             }
@@ -94,13 +94,13 @@ class MenuFragment : Fragment() {
         binding.refreshLayout.isRefreshing = true
 
         val fetchFunction = when(selectedMenuItem) {
-            MenuItems.PIZZA -> foodApi.getPizza()
-            MenuItems.PASTA -> foodApi.getPasta()
-            MenuItems.SALADS -> foodApi.getSalads()
-            MenuItems.DESSERTS -> foodApi.getDesserts()
-            MenuItems.DRINKS -> foodApi.getDrinks()
-            MenuItems.SAUCES -> foodApi.getSauces()
-            MenuItems.SIDES -> foodApi.getSides()
+            PIZZA -> foodApi.getPizza()
+            PASTA -> foodApi.getPasta()
+            SALADS -> foodApi.getSalads()
+            DESSERTS -> foodApi.getDesserts()
+            DRINKS -> foodApi.getDrinks()
+            SAUCES -> foodApi.getSauces()
+            SIDES -> foodApi.getSides()
             else -> foodApi.getPizza()
         }
 
@@ -125,7 +125,7 @@ class MenuFragment : Fragment() {
 
     private fun showFood() {
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
-        binding.recyclerView.adapter = FoodAdapter(filteredFoodList)
+        binding.recyclerView.adapter = FoodAdapter(filteredFoodList, selectedMenuItem)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -174,7 +174,7 @@ class MenuFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        selectedMenuItem = MenuItems.PIZZA
+        selectedMenuItem = PIZZA
     }
 
     private fun hideKeyboard() {
