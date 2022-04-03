@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.DataBindingUtil
 import com.android.example.pizzahunter.*
+import com.android.example.pizzahunter.database.Database
 import com.android.example.pizzahunter.databinding.ActivityFoodDetailBinding
 import com.android.example.pizzahunter.models.Food
 import com.android.example.pizzahunter.ui.fragments.MenuFragment
@@ -51,6 +52,12 @@ class FoodDetailActivity : AppCompatActivity() {
 
         if (getShareIntent().resolveActivity(packageManager) == null) {
             menu?.findItem(R.id.shareButton)?.isVisible = false
+            menu?.findItem(R.id.favouritesButton)?.isVisible = false
+        }
+        else {
+            if (!Database.isUserLoggedIn()) {
+                menu?.findItem(R.id.favouritesButton)?.isVisible = false
+            }
         }
 
         return super.onCreateOptionsMenu(menu)
