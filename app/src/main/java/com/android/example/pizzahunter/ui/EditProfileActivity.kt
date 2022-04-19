@@ -26,7 +26,7 @@ class EditProfileActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_edit_profile)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         this.supportActionBar?.title = getString(R.string.edit_profile_title)
-        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)      // show the back arrow
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile)
 
@@ -37,6 +37,7 @@ class EditProfileActivity : AppCompatActivity(), CoroutineScope {
             val isFormOk = validateForm()
 
             if (isFormOk) {
+                // fet the form data
                 val firstName : String = binding.firstNameTextInput.text.toString()
                 val lastName : String = binding.lastNameTextInput.text.toString()
                 val phoneNumber : String = binding.editTextPhone.text.toString()
@@ -45,6 +46,8 @@ class EditProfileActivity : AppCompatActivity(), CoroutineScope {
 
                 launch {
                     val newUserInfo = hashMapOf<String, Any?>()
+
+                    // add the form information in the hashmap
                     if (firstName.isNotEmpty()) {
                         newUserInfo[Constants.USER_DB_KEYS.FIRST_NAME] = firstName
                     }
@@ -55,10 +58,12 @@ class EditProfileActivity : AppCompatActivity(), CoroutineScope {
                         newUserInfo[Constants.USER_DB_KEYS.PHONE_NUMBER] = phoneNumber
                     }
 
+                    // update the user using the hashmap
                     if (newUserInfo.isNotEmpty()) {
                         Database.updateUser(newUserInfo)
                     }
 
+                    // update the password if provided in the form
                     if (oldPassword.isNotEmpty()) {
                         val error : String? = Database.updatePassword(oldPassword, newPassword)
                         if (error != null) {
@@ -67,6 +72,7 @@ class EditProfileActivity : AppCompatActivity(), CoroutineScope {
                         }
                     }
                     if (canFinish) {
+                        // close the activity
                         finish()
                     }
                 }
@@ -75,6 +81,7 @@ class EditProfileActivity : AppCompatActivity(), CoroutineScope {
             binding.loadingScreen.visibility = View.GONE
         }
     }
+
     private fun showStringError(error: TextView, message: String) {
         error.visibility = View.VISIBLE
         error.text = message

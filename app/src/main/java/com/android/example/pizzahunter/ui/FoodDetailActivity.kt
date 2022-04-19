@@ -28,13 +28,15 @@ class FoodDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_food_detail)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         this.supportActionBar?.title = ""
-        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)      // show the back arrow
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_food_detail)
 
+        // get the information from the recyclerview card holder (from the FoodViewHolder in FoodAdapter)
         food = intent.getSerializableExtra(FoodViewHolder.FOOD_OBJECT_KEY) as Food
         type = intent.getStringExtra(FoodViewHolder.FOOD_TYPE_KEY) as String
 
+        // add the information in the activity
         val description = if (food.description != "") food.description else food.ingredients.joinToString(", ")
         val spicyIconVisible = if (food.spicy) View.VISIBLE else View.GONE
         val vegetarianIconVisible = if (food.vegetarian) View.VISIBLE else View.GONE
@@ -48,6 +50,7 @@ class FoodDetailActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // show the share button
         menuInflater.inflate(R.menu.food_item_action, menu)
 
         if (getShareIntent().resolveActivity(packageManager) == null) {
@@ -56,6 +59,7 @@ class FoodDetailActivity : AppCompatActivity() {
         }
         else {
             if (!Database.isUserLoggedIn()) {
+                // hide the favourites icon if the user isn't logged in
                 menu?.findItem(R.id.favouritesButton)?.isVisible = false
             }
         }
@@ -70,6 +74,7 @@ class FoodDetailActivity : AppCompatActivity() {
                 true
             }
             R.id.favouritesButton -> {
+                // just change the color of the heart (for now)
                 val drawable = item.icon
                 drawable.mutate()
                 DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.secondary))
@@ -145,6 +150,7 @@ class FoodDetailActivity : AppCompatActivity() {
     private fun getIngredientsList(ingr : List<String>) : String {
         var text = ""
         ingr.forEach {
+            // add bullet for each list item
             text += "\u2022 $it\n"
         }
         return text

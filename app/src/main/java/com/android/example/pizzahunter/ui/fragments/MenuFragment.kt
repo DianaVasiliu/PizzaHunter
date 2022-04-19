@@ -49,8 +49,10 @@ class MenuFragment : Fragment() {
 
         (activity as MainActivity).showChangePictureModal(false)
 
+        // initialize with empty list
         filteredFoodList = mutableListOf()
 
+        // fetch food from the api
         fetchFood()
 
         binding.refreshLayout.setOnRefreshListener {
@@ -67,10 +69,13 @@ class MenuFragment : Fragment() {
             binding.sidesMenuButton
         )
 
+        // setting on click listener for the buttons in the top slider
         for ((index, menuItem) in menuButtons.withIndex()) {
             menuItem.setOnClickListener {
+                // reset the search button: delete the text and show the search icon
                 searchButton?.setQuery("", false)
                 searchButton?.isIconified = true
+                // set the menu item according to the clicked button
                 selectedMenuItem = when(index) {
                     0 -> PIZZA
                     1 -> PASTA
@@ -85,14 +90,17 @@ class MenuFragment : Fragment() {
             }
         }
 
+        // for the search button
         setHasOptionsMenu(true)
 
         return binding.root
     }
 
     private fun fetchFood() {
+        // show the loading progress bar
         binding.refreshLayout.isRefreshing = true
 
+        // call the api methods, according to the selected menu item
         val fetchFunction = when(selectedMenuItem) {
             PIZZA -> foodApi.getPizza()
             PASTA -> foodApi.getPasta()
@@ -104,12 +112,15 @@ class MenuFragment : Fragment() {
             else -> foodApi.getPizza()
         }
 
+        // enqueue - send the request async
         fetchFunction.enqueue(object : Callback<List<Food>> {
             override fun onResponse(call: Call<List<Food>>, response: Response<List<Food>>) {
                 binding.refreshLayout.isRefreshing = false
                 food = response.body()
 
                 food?.let {
+                    // clear the old data in the list
+                    // and add the new fetch data
                     filteredFoodList.clear()
                     filteredFoodList.addAll(it)
                     showFood()
@@ -125,6 +136,7 @@ class MenuFragment : Fragment() {
 
     private fun showFood() {
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        // send the new parameters to the food manager
         binding.recyclerView.adapter = FoodAdapter(filteredFoodList, selectedMenuItem)
     }
 
@@ -142,6 +154,7 @@ class MenuFragment : Fragment() {
 
             @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
+                // clear the filtered list if there is a new query text in the search bar
                 filteredFoodList.clear()
                 val searchText = newText!!.lowercase()
 
@@ -151,18 +164,24 @@ class MenuFragment : Fragment() {
                         val description = it.description.lowercase()
                         val ingredients = it.ingredients.joinToString(",").lowercase()
 
+                        // checking if the query text exists in any food info
                         if(name.contains(searchText) ||
                             description.contains(searchText) ||
                             ingredients.contains(searchText)) {
 
+                            // add the food item in the filtered list if it matches the query text
                             filteredFoodList.add(it)
                         }
                     }
+                    // change the recyclerview data
                     binding.recyclerView.adapter!!.notifyDataSetChanged()
                 }
                 else {
+                    // if the query text has been cleared
+                    // then reset the filtered food list to contain all the fetched food
                     filteredFoodList.clear()
                     food?.let { filteredFoodList.addAll(it) }
+                    // change the recyclerview data
                     binding.recyclerView.adapter!!.notifyDataSetChanged()
                 }
                 return false

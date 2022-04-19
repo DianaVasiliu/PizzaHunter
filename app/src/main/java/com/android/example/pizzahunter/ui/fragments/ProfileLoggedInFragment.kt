@@ -67,12 +67,16 @@ class ProfileLoggedInFragment : Fragment() {
         binding.logoutButton.setOnClickListener {
             val mainActivity = requireActivity() as MainActivity
             mainActivity.showLoadingScreen(true)
+            // sign out from firebase
             Database.signOut()
+            // sign out from google
             googleSignInClient.revokeAccess()
+            // sign out from facebook
             LoginManager.getInstance().logOut()
             mainActivity.showLoadingScreen(false)
         }
 
+        // loading the profile picture into the picture view
         lifecycleScope.launch {
             var imageUrl: String = Database.getUser()?.get(Constants.USER_DB_KEYS.PROFILE_PIC_URI).toString()
 

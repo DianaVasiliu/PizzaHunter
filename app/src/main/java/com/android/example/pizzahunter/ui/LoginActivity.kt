@@ -49,10 +49,11 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_login)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         this.supportActionBar?.title = getString(R.string.login_title)
-        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)      // show back arrow
 
         callbackManager = CallbackManager.Factory.create()
 
+        // login with facebook
         LoginManager.getInstance().registerCallback(callbackManager, object: FacebookCallback<LoginResult> {
             override fun onCancel() {
                 Log.d(FACEBOOK_LOGIN, "onCancel")
@@ -76,6 +77,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
             }
         })
 
+        // login with google
         val gso: GoogleSignInOptions =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -85,12 +87,13 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
 
         val googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+        // used to launch the google login activity
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()
         ) { result ->
             val resultCode = result!!.resultCode
             val data = result.data
 
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {      // successful google login
                 val accountTask = GoogleSignIn.getSignedInAccountFromIntent(data)
 
                 try {

@@ -5,8 +5,6 @@ import android.util.Log
 import com.android.example.pizzahunter.Constants
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,6 +22,8 @@ class Database {
         private const val CREATE_ACCOUNT_TAG = "CREATE_ACCOUNT"
         private const val LOGIN_TAG = "LOGIN"
         private const val FIREBASE_TAG = "FIREBASE"
+        private const val GOOGLE_LOGIN_TAG = "GOOGLE_LOGIN"
+        private const val FACEBOOK_LOGIN_TAG = "FACEBOOK_LOGIN"
 
         private var error: String = ""
 
@@ -97,54 +97,37 @@ class Database {
         }
 
         suspend fun googleLogin(account: GoogleSignInAccount?) {
-            val TAG = "GOOGLE_LOGIN"
-
-            try {
+            error = try {
                 val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
                 val authResult = auth().signInWithCredential(credential).await()
-                Log.d(TAG, "googleLogin: success")
-
                 val userData = getUserData()
-
                 val firebaseUser = auth().currentUser
 
                 if (authResult.additionalUserInfo!!.isNewUser) {
                     addUser(firebaseUser!!.uid, userData)
                 }
-                else {
-                    Log.d(TAG, "googleLogin: Existing account ...")
-                }
-                error = ""
+                ""
 
             } catch (e: Exception) {
-                Log.d(TAG, "googleLogin: Error logging in: ${e.message}")
-                error = "Google Login Error: ${e.message.toString()}"
+                Log.d(GOOGLE_LOGIN_TAG, "googleLogin: ${e.message}")
+                "Google Login Error: ${e.message}"
             }
         }
 
         suspend fun facebookLogin(token: AccessToken) {
-            val TAG = "FACEBOOK_LOGIN"
-
-            try {
+            error = try {
                 val credential = FacebookAuthProvider.getCredential(token.token)
                 val authResult = auth().signInWithCredential(credential).await()
-
-                Log.d(TAG, "signInWithCredential:success")
-
                 val userData = getUserData()
-
                 val firebaseUser = auth().currentUser
 
                 if (authResult.additionalUserInfo!!.isNewUser) {
                     addUser(firebaseUser!!.uid, userData)
                 }
-                else {
-                    Log.d(TAG, "facebookLogin: Existing account ...")
-                }
-                error = ""
-            }
-            catch (e: Exception) {
-                Log.d(TAG, "facebookLogin: ${e.message}")
+                ""
+            } catch (e: Exception) {
+                Log.d(FACEBOOK_LOGIN_TAG, "facebookLogin: ${e.message}")
+                "Facebook Login Error: ${e.message}"
             }
         }
 
@@ -180,7 +163,6 @@ class Database {
             val firebaseUser = auth().currentUser
             val email = firebaseUser!!.email
             val profilePicUri = firebaseUser.photoUrl.toString()
-
             val userName = firebaseUser.displayName
             val firstName: String
             val lastName: String
@@ -210,7 +192,7 @@ class Database {
                 Log.d(FIREBASE_TAG, "Successfully updated $id")
             }
             catch (e: Exception) {
-                Log.w(FIREBASE_TAG, "Failure", e)
+                Log.d(FIREBASE_TAG, "Failure", e)
             }
         }
 

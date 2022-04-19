@@ -29,7 +29,7 @@ class SignupActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_signup)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         this.supportActionBar?.title = getString(R.string.signup_title)
-        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        this.supportActionBar?.setDisplayHomeAsUpEnabled(true)  // show the back arrow
 
         val binding = DataBindingUtil.setContentView<ActivitySignupBinding>(this,
             R.layout.activity_signup

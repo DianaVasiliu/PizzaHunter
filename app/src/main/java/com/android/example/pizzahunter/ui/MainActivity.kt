@@ -68,6 +68,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         ActivityResultContracts.GetContent()
     ) {
         if (it != null) {
+            // if an image has been selected from the gallery
+            // load it in the cloud storage
             selectedPhotoUri = it
             loadPhoto(it)
         }
@@ -96,6 +98,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
+        // save the fragment before changing the screen orientation
+        // to restore the rendered fragment
         if (savedInstanceState != null) {
             currentFragmentIndex = savedInstanceState.getInt(CURRENT_FRAGMENT_INDEX)
             profileFragment = when (savedInstanceState.getInt(CURRENT_PROFILE_FRAGMENT_INDEX)) {
@@ -104,9 +108,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             }
         }
 
+        // set the initial fragment to the home fragment
         currentFragment = indexToFragment(currentFragmentIndex)
         replaceFragment(currentFragment)
 
+        // change the profile fragment if the user logs out
         setOnAuthStateChangeListener()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -119,10 +125,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             openGallery()
         }
 
+        // after taking a photo, the user must chose to keep or to reject the photo
         binding.acceptPhotoButton.setOnClickListener {
             acceptPhoto()
         }
-
         binding.rejectPhotoButton.setOnClickListener {
             rejectPhoto()
         }
@@ -149,6 +155,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         val bottomNavigationView = binding.bottomNavigation
         bottomNavigationView.setOnItemSelectedListener {
+            // replace the rendered fragment when navigating
             when(it.itemId) {
                 R.id.home_nav_button -> replaceFragment(homeFragment)
                 R.id.menu_nav_button -> replaceFragment(menuFragment)
@@ -187,6 +194,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             else -> 2
         }
 
+        // save information about the fragments
+        // to restore the fragment when changing screen orientation
         outState.putInt(CURRENT_FRAGMENT_INDEX, currentFragmentIndex)
         outState.putInt(CURRENT_PROFILE_FRAGMENT_INDEX, profileIndex)
     }
@@ -260,6 +269,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun checkOpenCamera(binding: ActivityMainBinding) {
+        // can only open camera if the phone is in portrait mode
+        // so first check the phone orientation
+        // show error if the orientation is bad
         if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) {
             binding.errorModal.visibility = View.VISIBLE
             binding.errorModal.text = getString(R.string.must_be_portrait_mode)
@@ -269,6 +281,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
+    // required permissions: camera & write external storage
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
@@ -288,7 +301,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
             }
             imageCapture = ImageCapture.Builder().build()
-            val cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()
+            val cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()   // front camera
 
             try {
                 cameraProvider.unbindAll()
@@ -304,7 +317,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         val imageCapture = imageCapture ?: return
 
         val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
+        // set file info
         val contentValues = ContentValues().apply {
+            // name, type, path
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
@@ -319,6 +334,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                             contentValues)
                 .build()
 
+        // save the image to the gallery
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(this),
@@ -328,6 +344,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     photoUri = output.savedUri
                     closeCamera()
+                    // show the screen where the user verifies the photo before posting it
                     checkResultedPhoto(photoUri)
                 }
 
@@ -371,7 +388,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun acceptPhoto() {
-        loadPhoto(photoUri)
+        loadPhoto(photoUri)     // load the photo to the cloud storage
         binding.bottomNavigation.visibility = View.VISIBLE
         binding.acceptPhotoLayout.visibility = View.GONE
         this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
@@ -392,6 +409,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             binding.loadingScreen.visibility = View.GONE
 
             if (currentFragment == profileLoggedInFragment) {
+                // refresh the fragment by reattaching it
+                // to show the new profile pic
                 var transaction = supportFragmentManager.beginTransaction()
                 transaction.detach(profileLoggedInFragment)
                 transaction.commit()
