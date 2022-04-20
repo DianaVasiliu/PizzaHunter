@@ -72,19 +72,25 @@ PizzaHunter is a WIP food delivery app, where you can place orders and share ite
 
 ### Menu
 
-<img src="./screenshots/Menu1.png" width="30%" />
-<img src="./screenshots/Search.png" width="30%" />
+<div>
+    <img src="./screenshots/Menu1.png" width="30%" />
+    <img src="./screenshots/Search.png" width="30%" />
+</div>
 
 ### Social Login
 
-<img src="./screenshots/GoogleLogin.jpg" width="30%" />
-<img src="./screenshots/FacebookLogin.png" width="30%" />
+<div>
+    <img src="./screenshots/GoogleLogin.jpg" width="30%" />
+    <img src="./screenshots/FacebookLogin.png" width="30%" />
+</div>
 
 ### Edit profile information
 
-<img src="./screenshots/EditProfile0.png" width="30%" />
-<img src="./screenshots/EditProfile1.png" width="30%" />
-<img src="./screenshots/EditProfile2.png" width="30%" />
+<div>
+    <img src="./screenshots/EditProfile0.png" width="30%" />
+    <img src="./screenshots/EditProfile1.png" width="30%" />
+    <img src="./screenshots/EditProfile2.png" width="30%" />
+</div>
 
 ### Edit profile picture
 
@@ -92,25 +98,33 @@ PizzaHunter is a WIP food delivery app, where you can place orders and share ite
 
 1. Take photo using camera
 
-<img src="./screenshots/TakePicture.png" width="30%" />
-<img src="./screenshots/SavePicture.png" width="30%" />
-<img src="./screenshots/UploadedPicture.png" width="30%" />
+<div>
+    <img src="./screenshots/TakePicture.png" width="30%" />
+    <img src="./screenshots/SavePicture.png" width="30%" />
+    <img src="./screenshots/UploadedPicture.png" width="30%" />
+</div>
 
 2. Upload picture from gallery
 
-<img src="./screenshots/Gallery.png" width="30%" />
-<img src="./screenshots/UploadedFromGallery.png" width="30%" />
+<div>
+    <img src="./screenshots/Gallery.png" width="30%" />
+    <img src="./screenshots/UploadedFromGallery.png" width="30%" />
+</div>
 
 ### Sharesheet
 
-<img src="./screenshots/ItemToShare.png" width="30%" />
-<img src="./screenshots/Sharesheet.png" width="30%" />
-<img src="./screenshots/ShareResult.jpeg" width="30%" />
+<div>
+    <img src="./screenshots/ItemToShare.png" width="30%" />
+    <img src="./screenshots/Sharesheet.png" width="30%" />
+    <img src="./screenshots/ShareResult.jpeg" width="30%" />
+</div>
 
 ### Video playback
 
-<img src="./screenshots/Video1.png" width="30%" />
-<img src="./screenshots/Video2.png" width="30%" />
+<div>
+    <img src="./screenshots/Video1.png" width="30%" />
+    <img src="./screenshots/Video2.png" width="30%" />
+</div>
 
 ## TODO
 
